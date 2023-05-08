@@ -68,17 +68,17 @@ public class Administrador extends Usuarios{
 				   total++;
 				}
 				
-				if(total == 1) {
-					if(rol.equals("administrador")) {
+				if(rol.equals("administrador")) {
+					if(total == 1) {
 						System.out.println();
 						estado = false;
 						MenuPrincipal.menu();
 					} else {
-						System.out.println("\nEl usuario debe ser administrador\n");
+						System.out.println("\nEmpleado o contraseña incorrecta\n");
 					}
 					
 				} else {
-					System.out.println("\nEmpleado o contraseña incorrecta\n");
+					System.out.println("\nEl usuario debe ser administrador\n");
 				}		
 				
 			} catch (SQLException e) {
