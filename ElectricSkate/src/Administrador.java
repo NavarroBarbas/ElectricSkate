@@ -33,53 +33,60 @@ public class Administrador extends Usuarios{
 			System.out.println("Bienvenido al programa!\n");
 			System.out.println("Acceso al sistema");
 			System.out.print("Email: ");
-			email = teclado.nextLine();
-			
+			email = teclado.nextLine();	
+						
 			System.out.print("Contraseña: ");
 			passwd = teclado.nextLine();
 			
 			String queryEmail = "SELECT email, contraseña FROM usuarios "
 					+ "WHERE email = '" + email + "'"
-					+ "AND contraseña = '" + passwd + "'" ;
+					+ "AND contraseña = '" + passwd + "'" ;		
 			
-			String queryAdmin = "SELECT rol FROM usuarios "
+			String queryAdmin = "SELECT email, rol FROM usuarios "
+					+ "WHERE email = '" + email + "'";
+			
+			String queryUser = "SELECT email FROM usuarios "
 					+ "WHERE email = '" + email + "'";
 			
 			Statement stmt = null;
-			Statement stmt2 = null;
-			
-			int total = 0;
 			
 			try {
 				stmt = con.createStatement();
-				stmt2 = con.createStatement();
-								
 				ResultSet rs = stmt.executeQuery(queryEmail);
-				ResultSet rs2 = stmt2.executeQuery(queryAdmin);
-
-				String rol = "";
+				int total = 0;
 				
-				while(rs2.next()) {
-					rol = rs2.getString("rol");
-				}
-								
-				total = 0;
 				while (rs.next()){
-				   total++;
+					   total++;
+				}
+
+				rs = stmt.executeQuery(queryAdmin);	
+				String rol = "";
+				while(rs.next()) {
+					rol = rs.getString("rol");
 				}
 				
-				if(rol.equals("administrador")) {
-					if(total == 1) {
-						System.out.println();
-						estado = false;
-						MenuPrincipal.menu();
+				rs = stmt.executeQuery(queryUser);
+				int existeUser = 0;
+				while(rs.next()) {
+					existeUser++;
+				}
+				
+				if(existeUser == 1) {
+					if(rol.equals("administrador")) {
+						if(total == 1) {
+							System.out.println();
+							estado = false;
+							MenuPrincipal.menu();
+						} else {
+							System.out.println("\nEmpleado o contraseña incorrecta\n");
+						}
+						
 					} else {
-						System.out.println("\nEmpleado o contraseña incorrecta\n");
+						System.out.println("\nEl usuario debe ser administrador\n");
 					}
-					
 				} else {
-					System.out.println("\nEl usuario debe ser administrador\n");
-				}		
+					System.out.println("\nEmpleado o contraseña incorrecta\n");
+				}
 				
 			} catch (SQLException e) {
 				e.printStackTrace();

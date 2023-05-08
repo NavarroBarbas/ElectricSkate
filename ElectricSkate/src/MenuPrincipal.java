@@ -31,19 +31,19 @@ public class MenuPrincipal {
 				
 				switch (opcion) {
 				case 1:
-					
+					//Método Usuarios.MenuUsuarios
 					break;
 					
 				case 2:
-					
+					//Método Patinetes.MenuPatinetes
 					break;
 				
 				case 3:
-					
+					//Método Listas.MenuListas
 					break;
 					
 				case 4:
-					
+					//Método Usuarios.buscardni
 					break;
 
 				case 5: 
