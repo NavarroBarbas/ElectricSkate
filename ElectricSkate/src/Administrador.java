@@ -4,21 +4,21 @@ import java.util.Scanner;
 public class Administrador extends Usuarios{
 
 	//Atributos
-	String contraseña;
+	String contrasenya;
 	
 	//Constructor
 	public Administrador(String nombre, String apellidos, int edad, 
-			String dni, String email, String contraseña) {
+			String dni, String email, String contrasenya) {
 		super(nombre, apellidos, edad, dni, email);
-		this.contraseña = contraseña;
+		this.contrasenya = contrasenya;
 	}
 
-	public String getContraseña() {
-		return contraseña;
+	public String getcontrasenya() {
+		return contrasenya;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setcontrasenya(String contrasenya) {
+		this.contrasenya = contrasenya;
 	}
 	
 	//Métodos
@@ -35,12 +35,12 @@ public class Administrador extends Usuarios{
 			System.out.print("Email: ");
 			email = teclado.nextLine();	
 						
-			System.out.print("Contraseña: ");
+			System.out.print("contrasenya: ");
 			passwd = teclado.nextLine();
 			
-			String queryEmail = "SELECT email, contraseña FROM usuarios "
+			String queryEmail = "SELECT email, contrasenya FROM usuarios "
 					+ "WHERE email = '" + email + "'"
-					+ "AND contraseña = '" + passwd + "'" ;		
+					+ "AND contrasenya = '" + passwd + "'" ;		
 			
 			String queryAdmin = "SELECT email, rol FROM usuarios "
 					+ "WHERE email = '" + email + "'";
@@ -78,14 +78,14 @@ public class Administrador extends Usuarios{
 							estado = false;
 							MenuPrincipal.menu();
 						} else {
-							System.out.println("\nEmpleado o contraseña incorrecta\n");
+							System.out.println("\nEmpleado o contrasenya incorrecta\n");
 						}
 						
 					} else {
 						System.out.println("\nEl usuario debe ser administrador\n");
 					}
 				} else {
-					System.out.println("\nEmpleado o contraseña incorrecta\n");
+					System.out.println("\nEmpleado o contrasenya incorrecta\n");
 				}
 				
 			} catch (SQLException e) {
