@@ -12,10 +12,7 @@ public abstract class Usuarios {
 	public Usuarios(String nombre, String apellidos, int edad, String dni, String email) {
 		super();
 		
-		// Comentario Andreu
-		//comentario de pedro
-		//comentario de Juan 
-		//Comentario de javi
+		
 	
 		
 		
