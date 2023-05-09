@@ -13,6 +13,7 @@ public abstract class Usuarios {
 		super();
 		
 		// Comentario Andreu
+		//comentario de pedro
 		
 	}
 }
