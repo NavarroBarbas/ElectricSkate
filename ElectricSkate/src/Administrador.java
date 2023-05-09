@@ -21,7 +21,7 @@ public class Administrador extends Usuarios{
 		this.contrasenya = contrasenya;
 	}
 	
-	//Métodos
+	//Metodos
 	public static void login(Connection con, String BDNombre) throws SQLException {
 		boolean estado = true;
 		
