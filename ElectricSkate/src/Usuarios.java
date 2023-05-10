@@ -16,7 +16,6 @@ public abstract class Usuarios {
 	
 		
 		
-		System.out.println("esto es una prueba de algo que escribe juan");
-		System.out.println("esto de github");
+		
 	}
 }
