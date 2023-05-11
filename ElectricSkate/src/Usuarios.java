@@ -1,73 +1,93 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
 public abstract class Usuarios {
-
-	// ATRIBUTOS
-	String nombre;
-	String apellidos;
-	int edad;
-	String dni;
-	String email;
-
-	// CONSTRUCTOR
-	public Usuarios(String nombre, String apellidos, int edad, String dni, String email) {
-		super();
-
-	}
 	
+	public static void login(Connection con, String BDNombre) throws SQLException {
+		boolean estado = true;
+		
+		while(estado) {
+			Scanner teclado = new Scanner(System.in);
+			String email;
+			String passwd;
+			
+			System.out.println("Bienvenido al programa!\n");
+			System.out.println("Acceso al sistema");
+			System.out.print("Email: ");
+			email = teclado.nextLine();	
+						
+			System.out.print("contrasenya: ");
+			passwd = teclado.nextLine();
+			
+			String queryEmail = "SELECT email, contrasenya FROM usuarios "
+					+ "WHERE email = '" + email + "'"
+					+ "AND contrasenya = '" + passwd + "'" ;		
+			
+			String queryAdmin = "SELECT email, rol FROM usuarios "
+					+ "WHERE email = '" + email + "'";
+			
+			String queryUser = "SELECT email FROM usuarios "
+					+ "WHERE email = '" + email + "'";
+			
+			Statement stmt = null;
+			
+			try {
+				stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery(queryEmail);
+				int total = 0;
+				
+				while (rs.next()){
+					   total++;
+				}
 
-	public String getNombre() {
-		return nombre;
+				rs = stmt.executeQuery(queryAdmin);	
+				String rol = "";
+				while(rs.next()) {
+					rol = rs.getString("rol");
+				}
+				
+				rs = stmt.executeQuery(queryUser);
+				int existeUser = 0;
+				while(rs.next()) {
+					existeUser++;
+				}
+				
+				if(existeUser == 1) {
+					if(rol.equals("administrador")) {
+						if(total == 1) {
+							System.out.println();
+							estado = false;
+							MenuPrincipal.menu();
+						} else {
+							System.out.println("\nEmpleado o contrasenya incorrecta\n");
+						}
+						
+					} else {
+						System.out.println("\nEl usuario debe ser administrador\n");
+					}
+				} else {
+					System.out.println("\nEmpleado o contrasenya incorrecta\n");
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				stmt.close();
+			}
+		}
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
 
-	public String getApellidos() {
-		return apellidos;
-	}
-
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
-	}
-
-	public int getEdad() {
-		return edad;
-	}
-
-	public void setEdad(int edad) {
-		this.edad = edad;
-	}
-
-	public String getDni() {
-		return dni;
-	}
-
-	public void setDni(String dni) {
-		this.dni = dni;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	 // METODO PARA LISTAR USUARIOS
-    public void listarUsuarios() {
+	public static void MenuUsuario(Connection con, String BDNombre) throws SQLException {
     	
     	// HAGO LA CONEXION A LA BASE DE DATOS 
-        Connection con = null;
         Statement stmt = null;
+        
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/electricskate", "root", "");
             stmt = con.createStatement();
 
             boolean estado = true;
@@ -75,14 +95,14 @@ public abstract class Usuarios {
                 // LLAMO A LA CLASE SCANNER
                 Scanner teclado = new Scanner(System.in);
                 // CREO UN MENU COMO EL MENU PRINCIPAL
-                System.out.println("MenÃº Principal: ElectricSkate\n");
+                System.out.println("Menú Principal: ElectricSkate\n");
                 System.out.println("1. Gestionar Usuarios (Empleados/Clientes)");
                 System.out.println("2. Gestionar Patinetes");
                 System.out.println("3. Listar (Empleados/Clientes/Patinetes)");
                 System.out.println("4. Buscar Por DNI");
                 System.out.println("5. Salir\n");
 
-                System.out.println("Elige una opciÃ³n: ");
+                System.out.println("Elige una opción: ");
                 int opcion = teclado.nextInt();
                 // SALTO DE LINEA PARA EVITAR ERROR
                 teclado.nextLine();
@@ -98,29 +118,20 @@ public abstract class Usuarios {
                     case 4:
                         break;
                     case 5:
-                        System.out.println("\nAdiÃ³s\n");
+                        System.out.println("\nAdiós\n");
                         estado = false;
                         break;
                     default:
-                        System.out.println("\nElige un nÃºmero entre 1 y 5\n");
+                        System.out.println("\nElige un número entre 1 y 5\n");
                         break;
                 }
-                //CIERRO TECLADO
-                teclado.close();
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            // CERRAR CLASES STATAMENT Y CONEXION
-            try {
-                if (stmt != null)
-                    stmt.close();
-                if (con != null)
-                    con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            // CERRAR CONEXION
+           stmt.close();
         }
 
 

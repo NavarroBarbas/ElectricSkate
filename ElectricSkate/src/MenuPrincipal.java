@@ -48,7 +48,7 @@ public class MenuPrincipal {
 
 				case 5: 
 					System.out.println("\nAdiós\n");
-					Administrador.login(con, "electricskate");
+					Usuarios.login(con, "electricskate");
 					break;
 				default:
 					
