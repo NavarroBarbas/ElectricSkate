@@ -39,7 +39,7 @@ public class MenuPrincipal {
 					break;
 				
 				case 3:
-					//Método Listas.MenuListas
+					Listar.MenuListar();
 					break;
 					
 				case 4:
@@ -58,11 +58,11 @@ public class MenuPrincipal {
 			}
 			
 			
-			} catch (SQLException e) {
-				e.printStackTrace();
-				System.out.println("\nUsuario o contraseña incorrecta\n");
-			} finally {
-				stmt.close();
-			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+				
+		} finally {
+			stmt.close();
+		}	
 	}
 }
