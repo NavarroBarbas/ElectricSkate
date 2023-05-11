@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Listar {
     public static void MenuListar() {
         Scanner scanner = new Scanner(System.in);
+        /
         
         int opcion = 0;
         do {
