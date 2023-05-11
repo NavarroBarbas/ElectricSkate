@@ -1,12 +1,10 @@
 import java.util.Scanner;
 
 public class Listar {
-
-	public static void main(String[] args) {
+    public static void MenuListar() {
         Scanner scanner = new Scanner(System.in);
-
+        
         int opcion = 0;
-
         do {
             System.out.println("LISTAR (Empleados/Clientes/Patinetes)");
             System.out.println("1. Listar usuarios empleados");
@@ -27,6 +25,8 @@ public class Listar {
                     break;
                 case 3:
                     System.out.println("Listando todos los usuarios...");
+                    Listar.MenuListar();
+
                     break;
                 case 4:
                     System.out.println("Listando patinetes alquilados...");
@@ -40,10 +40,8 @@ public class Listar {
                 default:
                     System.out.println("Opción inválida, vuelva a intentarlo.");
             }
-
         } while (opcion != 6);
 
         scanner.close();
     }
-
-	}
+}
