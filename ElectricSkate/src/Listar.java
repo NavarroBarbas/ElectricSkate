@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileWriter;
 import java.util.Scanner;
 
 public class Listar {
@@ -43,4 +45,36 @@ public class Listar {
             }
         } while (opcion != 6);
     }
+    
+    public static void guardarListado(String lista, String nomArchivo) {
+		File fs = null;
+		File fd = null;
+		
+		try {
+			fd= new File("C:/informes");
+			if(!fd.exists()) {
+				fd.mkdirs();
+			}
+			
+			fs = new File("C:/informes/" + nomArchivo + ".txt");
+			
+			if(!fs.exists()) {
+				
+				fs.createNewFile();
+			}
+			
+			FileWriter fw = new FileWriter(fs);
+			
+			fw.write(lista);
+			
+			if (fw != null) {
+				fw.close();
+			}
+			
+			System.out.println("La lista ha sido guardada con éxito!\n");
+			
+		} catch (Exception e) {
+			System.out.println("No se ha podido guardar el listado\n");
+		}
+	}
 }
