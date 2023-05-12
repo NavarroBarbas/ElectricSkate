@@ -104,8 +104,10 @@ public abstract class Usuarios {
 				// HAGO UN MENU CON SWITCH
 				switch (opcion) {
 				case 1:
+					crearCliente(con, "electricskate");
 					break;
 				case 2:
+					crearAdministrador(con, "electricskate");
 					break;
 				case 3:
 					System.out.println("\nAdios\n");
@@ -126,57 +128,85 @@ public abstract class Usuarios {
 		}
 
 	}
-	// CREO EL METODO PARA PODER CREAR UN USUARIO
-	public static void crearUsuario(Connection con, String BDNombre) throws SQLException {
-		
-		Statement stmt=null;
-		Scanner teclado=new Scanner(System.in);
-		
-		try {
-			stmt=con.createStatement();
-			
-			System.out.println("Desea crear un Usuario (Empleado/Cliente");
-			String opcion=teclado.nextLine();
-			switch (opcion.toUpperCase()) {
-			case "S":
-				// PIDO LOS DATOS AL USUARIO
-				System.out.println("Por favor introduzca un nombre: ");
-				String nombre=teclado.nextLine();
-				System.out.println("El nombre seleccionado es:" + nombre);
-				System.out.println("Por favor introduzca el primer apellido: ");
-				String apellido1=teclado.nextLine();
-				System.out.println("El primer apellido es: " + apellido1);
-				System.out.println("Introduzca el segundo apellido: ");
-				String apellido2=teclado.nextLine();
-				System.out.println("El segundo apellido es: " + apellido2);
-				System.out.println("Introduzca su edad: " );
-				String edad= teclado.nextLine();
-				System.out.println("La edad introducida es: " + edad);
-				System.out.println("Por favor introduzca su dni(8 numeros seguidos de una letra: ");
-				String dni=teclado.nextLine();
-				
-				
-				
-				break;
-			case "N":
-				MenuUsuario(con, "electricskate");
-				break;
 
-			default:
-				System.out.println("Por favor eliga S/N");
-				break;
+	// CREO EL METODO PARA PODER CREAR UN USUARIO
+	public static void crearCliente(Connection con, String BDNombre) throws SQLException {
+
+		Statement stmt = null;
+		Scanner teclado = new Scanner(System.in);
+
+		try {
+			stmt = con.createStatement();
+
+			// PIDO LOS DATOS AL USUARIO
+			System.out.println("Por favor introduzca un nombre: ");
+			String nombre = teclado.nextLine();
+			System.out.println("\nEl nombre seleccionado es:" + nombre);
+			System.out.println("\nPor favor introduzca el primer apellido: ");
+			String apellido1 = teclado.nextLine();
+			System.out.println("\nEl primer apellido es: " + apellido1);
+			System.out.println("\nIntroduzca el segundo apellido: ");
+			String apellido2 = teclado.nextLine();
+			System.out.println("\nEl segundo apellido es: " + apellido2);
+			System.out.println("\nIntroduzca su edad: ");
+			String edad = teclado.nextLine();
+			System.out.println("\nLa edad introducida es: " + edad);
+			System.out.println("\nPor favor introduzca su DNI(8 numeros seguidos de una letra: ");
+			String dni = teclado.nextLine();
+			do {
+				if (dni.length() != 9) {
+					System.out.println("\nLa secuencia de numeros introducida es correcta");
+					System.out.println("\nEL DNI introducido es: " +  dni);
+				}
+				System.out.println("Por favor vuelva a introducir su DNI");
+				dni = teclado.nextLine();
+			} while (dni.length() != 9);
+			System.out.println("\nIntroduzca un email:");
+			String email=teclado.nextLine();
+			System.out.println("\nPor favor introduzca la contraseña(maximo 8 caracteres,3mas,3min,2numeros):");
+			String contrasenya = teclado.nextLine();
+			// CREO TRES VARIABLES PARA CONTAR
+			int mayuscula = 0;
+			int minuscula = 0;
+			int numero = 0;
+			// HAGO UN IF Y DENTRO UN BUCLE PARA RECORRER LA CONTRASEÑA Y DENTRO VOY
+			// COMPROBANDO SI LA CONTRASEÑA TIENE
+			// 3 MAYUSCULAS, 3 MINUSCULAS Y 2 NUMEROS
+			if (contrasenya.length() >= 8 && contrasenya.length() <= 8) {
+				for (int i = 0; i < contrasenya.length(); i++) {
+					char caracteres = contrasenya.charAt(i);
+					if (Character.isUpperCase(caracteres)) {
+						mayuscula++;
+					} else if (Character.isLowerCase(caracteres)) {
+						minuscula++;
+
+					} else if (Character.isDigit(caracteres)) {
+						numero++;
+					}
+				}
+
+				if (mayuscula == 3 && minuscula == 3 && numero == 2) {
+					System.out.println("\nLa contraseña introducida es correcta. ");
+				} else {
+					System.out.println("\nLa contraseña introducida no cumple los parametros solicitados.");
+				}
+			} else {
+				System.out.println("\nLa contraseña debe tener una longitud maxima de 8 caracteres.");
 			}
-			
+			System.out.println("Por favor introduzca un rol: ");
+			String rol=teclado.nextLine();
+
 		} catch (Exception e) {
 			// TODO: handle exception
+		}finally {
+			stmt.close();
 		}
-		
+
 	}
+
 	// CREO EL METODO PARA PODER CREAR UN ADMINISTRADOR
 	public static void crearAdministrador(Connection con, String BDNombre) throws SQLException {
-		
-		
-		
+
 	}
-	
+
 }
