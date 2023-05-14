@@ -4,11 +4,12 @@ import java.util.Scanner;
 public class Patinete {
 
 	public static void MenuGestionarPatinetes(Connection con, String BDNombre) throws SQLException {
-		Scanner teclado = new Scanner(System.in);
+		
 
-		int opcionMenuPatinete = 0;
+		int opcionMenuPatinete;
 		
 		do {
+			Scanner teclado = new Scanner(System.in);
 			System.out.println();
 			System.out.println("GESTIONAR PATINETES");
 			System.out.println();
@@ -18,28 +19,22 @@ public class Patinete {
 			System.out.println("4. Atrás");
 			System.out.println();
 			
-			System.out.println("Elige una opción: ");
+			System.out.print("Elige una opción: ");
 			
-			try {
-
-				opcionMenuPatinete = teclado.nextInt();
-				teclado.nextLine();	
-							   
-				} catch (Exception e) {
-				   e.printStackTrace();
-				}	
-			
+			opcionMenuPatinete = teclado.nextInt();
+			teclado.nextLine();
+				
 			switch (opcionMenuPatinete) {
 			case 1:
 				String numSerie, marca, modelo, color;
 
-				System.out.print("Escriba el número de serie: ");
+				System.out.print("Introduzca el número de serie: ");
 				numSerie = teclado.nextLine();
-				System.out.print("Escriba la marca: ");
+				System.out.print("Introduzca la marca: ");
 				marca = teclado.nextLine();
-				System.out.print("Escriba el modelo: ");
+				System.out.print("Introduzca el modelo: ");
 				modelo = teclado.nextLine();
-				System.out.print("Escriba el color: ");
+				System.out.print("Introduzca el color: ");
 				color = teclado.nextLine();
 
 				// Para que el número de serie siempre se ponga en mayúsculas
@@ -49,12 +44,11 @@ public class Patinete {
 
 				break;
 			case 2:
-
 				String numSerieAl, emailAlquiler;
 
-				System.out.print("Escriba el número de serie del patinete que desea alquilar: ");
+				System.out.print("Introduzca el número de serie del patinete que desea alquilar: ");
 				numSerieAl = teclado.nextLine();
-				System.out.print("Escriba el email del cliente al que quiere alquilar el patinete: ");
+				System.out.print("Introduzca el email del cliente al que quiere alquilar el patinete: ");
 				emailAlquiler = teclado.nextLine();
 				System.out.println();
 
@@ -64,30 +58,60 @@ public class Patinete {
 				alquilerPatinete(con, BDNombre, numSerieAl, emailAlquiler);
 
 				break;
-			case 3:
-
+			case 3:				
+				String emailDev;
+				int kmPatinete;
+				System.out.print("Introduzca el email del cliente que quiere hacer la devolución: ");
+				emailDev = teclado.nextLine();
+				System.out.print("Introduzca los kilómetros del patinete: ");
+				kmPatinete = teclado.nextInt();
+				
+				devolucionPatinete(con, BDNombre, emailDev, kmPatinete);
+				
 				break;
 			case 4:
-				System.out.println("\nVolviendo atrás...\n");
+				System.out.println();
+				System.out.println("Volviendo atrás...");
 				break;
 			default:
-				System.out.println("\nOpción inválida, vuelva a intentarlo.\n");
+				System.out.println();
+				System.out.println("Opción inválida, vuelva a intentarlo.");
 			}
 			
 		} while (opcionMenuPatinete != 4);
-				
-		teclado.close();
 
 	}
+	
+	public static void anyadirPatinete(Connection con, String BDNombre, String numSerie, String marca, String modelo,
+			String color) throws SQLException {
 
+		Statement stmt = null;
+
+		try {
+
+			stmt = con.createStatement();
+			stmt.executeUpdate("INSERT INTO " + BDNombre + ".patinetes VALUES " + "('" + numSerie + "' , '" + marca
+					+ "' , '" + modelo + "' , '" + color + "', " + 0 + ")");
+
+			System.out.println("");
+			System.out.println("Se ha introducido un nuevo patinete en la base de datos.");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			metodoVolver();
+		} finally {
+			stmt.close();
+		}
+
+	}
+	
 	public static void alquilerPatinete(Connection con, String BDNombre, String numSerieAl, String emailAlquiler)
 			throws SQLException {
-		Scanner teclado = new Scanner(System.in);
+		Scanner teclado = new Scanner(System.in); 
 		int validadorNumSerie = 0;
 		int validadorEmail = 0;
 		int validacionNumSerieAlquiler = 0;
 		int validacionEmailAlquiler = 0;
-		String volver;
 
 		Statement stmt = null;
 
@@ -159,65 +183,97 @@ public class Patinete {
 					System.out.println("El cliente con email " + emailAlquiler + " ya tiene un alquiler.");
 				}
 
-				System.out.println();
-				System.out.println("Escribe la palabra \"exit\" para volver al menú de Gestión de patinetes: ");
-				volver = teclado.nextLine();
-
-				if (!volver.equals("exit")) {
-					do {
-						System.out.println();
-						System.out.println("Por favor, escriba \"exit\" correctamente para salir");
-						volver = teclado.nextLine();
-					} while (!volver.equals("exit"));
-				}
-		
+				metodoVolver();		
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println();
-			System.out.println("Escribe la palabra \"exit\" para volver al menú de Gestión de patinetes: ");
-			volver = teclado.nextLine();
-			volverMenuPatinetes(volver);
+			metodoVolver();
 		} finally {
-			teclado.close();
 			stmt.close();
 		}
 
 	}
-
-	public static void anyadirPatinete(Connection con, String BDNombre, String numSerie, String marca, String modelo,
-			String color) throws SQLException {
-
+	
+	public static void devolucionPatinete(Connection con, String BDNombre, String emailDev, int kmPatinete) {
+		Scanner teclado = new Scanner(System.in); 
+		int validadorEmailDev = 0;
+		int validadorEmailDev2 = 0;
+		
+		String numSerieEquivalente = "";
+		
 		Statement stmt = null;
-
+		
 		try {
-
-			stmt = con.createStatement();
-
-			stmt.executeUpdate("INSERT INTO " + BDNombre + ".patinetes VALUES " + "('" + numSerie + "' , '" + marca
-					+ "' , '" + modelo + "' , '" + color + "', " + 0 + ")");
-
-			System.out.println("");
-			System.out.println("Se ha introducido un nuevo patinete en la base de datos.");
-
-		} catch (SQLException e) {
-			System.out.println("El número de serie ya existe.");
-			System.out.println("Volviendo al menú de Gestión de Patinetes...");
-		} finally {
-			stmt.close();
+			stmt = con.createStatement();	
+			
+			// Comprobar que el email tenga un patinete asignado
+			// Si el email está en la tabla patinetesusuarios es que tiene un alquiler en este momento
+			String createString = "SELECT count(*) FROM patinetesusuarios WHERE email = '" + emailDev + "'";
+			ResultSet rs = stmt.executeQuery(createString);
+			if (rs.next()) {
+				validadorEmailDev = rs.getInt(1);
+			}
+			// Buscamos que número de serie tiene el email introducido en la tabla patienetesusuarios.
+			// Lo metemos en "numSerieEquivalente".
+			String createString2 = "SELECT numeroSerie FROM patinetesusuarios WHERE email = '" + emailDev + "'";
+			ResultSet rs2 = stmt.executeQuery(createString2);			
+			if (rs2.next()) {
+				// Solo hay una columna seleccionada en la consulta SQL por lo que ponemos (1)
+				numSerieEquivalente = rs2.getString(1);
+			}
+			
+			// Comprobar si el email está en la tabla usuarios
+			String createString3 = "SELECT count(*) FROM usuarios WHERE email = '" + emailDev + "'";
+			ResultSet rs3 = stmt.executeQuery(createString3);
+			if (rs3.next()) {
+				validadorEmailDev2 = rs3.getInt(1);
+			}
+			
+			if (validadorEmailDev != 0) {
+				stmt.executeUpdate("UPDATE " + BDNombre + ".patinetes SET km_recorridos = " 
+									+ kmPatinete + " WHERE numeroSerie = '" + numSerieEquivalente + "'");				
+				stmt.executeUpdate("DELETE FROM patinetesusuarios WHERE email = '" + emailDev + "'");
+				System.out.println("Efectuada devolución de patinete.");
+			} else if (validadorEmailDev2 == 0) {
+				System.out.println("El email " + emailDev + " no corresponde a ningún cliente.");				
+			}else {				
+				System.out.println("El cliente con email " + emailDev + " no tiene un alquiler en este momento.");
+			}
+			
+			metodoVolver();
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			metodoVolver();
 		}
-
+			
 	}
-
-	public static void volverMenuPatinetes(String volver) {
+	
+	public static void metodoVolver() {
 		Scanner teclado = new Scanner(System.in);
-		while (volver != "exit") {
-			System.out.println();
-			System.out.println("Por favor, escriba \"exit\" correctamente para salir!!!!!!!");
-			volver = teclado.nextLine();
+		String volver;
+		
+		System.out.println();
+		System.out.println("Escribe la palabra \"exit\" para volver al menú de Gestión de patinetes: ");
+		volver = teclado.nextLine();
+		
+		if (!volver.equals("exit")) {
+			do {
+				System.out.println();
+				System.out.println("Por favor, escriba \"exit\" correctamente para salir");
+				volver = teclado.nextLine();
+			} while (!volver.equals("exit"));
 		}
-		teclado.close();
 	}
-
+	
 }
+
+
+
+
+
+
+
+
+
