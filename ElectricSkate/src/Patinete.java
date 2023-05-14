@@ -9,7 +9,6 @@ public class Patinete {
 		int opcionMenuPatinete = 0;
 		
 		do {
-			opcionMenuPatinete = 0;
 			System.out.println();
 			System.out.println("GESTIONAR PATINETES");
 			System.out.println();
