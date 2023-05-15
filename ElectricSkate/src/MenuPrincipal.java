@@ -35,7 +35,7 @@ public class MenuPrincipal {
 					break;
 					
 				case 2:
-					//Método Patinetes.MenuPatinetes
+					Patinete.MenuGestionarPatinetes(con, "electricskate");
 					break;
 				
 				case 3:
@@ -50,6 +50,7 @@ public class MenuPrincipal {
 					System.out.println("\nAdiós\n");
 					Usuarios.login(con, "electricskate");
 					break;
+			
 				default:
 					
 					System.out.println("\nElige un número entre 1 y 5\n");
