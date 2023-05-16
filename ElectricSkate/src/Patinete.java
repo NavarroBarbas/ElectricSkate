@@ -56,11 +56,11 @@ public class Patinete {
 				
 				System.out.println("\nEscriba 'exit' en cualquier momento para salir al menú.\n");
 
-				System.out.print("Introduzca el número de serie del patinete que desea alquilar: ");
+				System.out.print("Introduzca el número de serie del patinete: ");
 				numSerieAl = teclado.nextLine();
 				if(numSerieAl.toLowerCase().equals("exit")) { break; }
 				
-				System.out.print("Introduzca el email del cliente al que quiere alquilar el patinete: ");
+				System.out.print("Introduzca el email del cliente: ");
 				emailAlquiler = teclado.nextLine();
 				if(emailAlquiler.toLowerCase().equals("exit")) { break; }
 				

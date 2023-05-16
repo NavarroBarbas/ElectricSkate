@@ -39,7 +39,7 @@ public class MenuPrincipal {
 					break;
 				
 				case 3:
-					Listar.MenuListar();
+					Listar.MenuListar(con, "electricskate");
 					break;
 					
 				case 4:

@@ -4,9 +4,8 @@ import java.util.Scanner;
 import java.sql.*;
 
  	 class Listar {
-	 private static Connection conn;
 
-    public static void MenuListar() throws SQLException {
+    public static void MenuListar(Connection conn, String BDNombre) throws SQLException {
         Scanner scanner = new Scanner(System.in);
         
         
@@ -20,22 +19,32 @@ import java.sql.*;
             System.out.println("5. Listar patinetes no alquilados");
             System.out.println("6. Atr s\n");
 
-            System.out.print("Elige una opci n: ");
+            System.out.print("Elige una opción: ");
             opcion = scanner.nextInt();
             scanner.nextLine();
             
             switch(opcion) {
                 case 1:
-                    System.out.println("\nListando usuarios empleados...\n");
-                    listarEmpleados();
+                    System.out.println(listarEmpleados(conn, "electricskate"));
+                    
+                    System.out.print("Dese guardar la lista? (S/N): ");
+                    String guardar = scanner.nextLine();
+                    
+                    if(guardar.equalsIgnoreCase("s") || guardar.equalsIgnoreCase("si")) {
+                    	guardarListado(listarEmpleados(conn, BDNombre), "empleados");
+                    } else {
+                    	System.out.println("La lista no ha sido guardada!");
+                    }
                     break;
                 case 2:
                     System.out.println("\nListando usuarios clientes...\n");
-                    listarClientes();
+                    listarClientes(conn, "electricskate");
+                    //Añadir if de guardado (Usar de ejemplo Case 1)
                     break;
                 case 3:
                     System.out.println("\nListando todos los usuarios...\n");
-                    listarTodosUsuarios();
+                    listarTodosUsuarios(conn, "electricskate");
+                  //Añadir if de guardado (Usar de ejemplo Case 1)
                     break;
                 case 4:
                     System.out.println("\nListando patinetes alquilados...\n");
@@ -44,32 +53,55 @@ import java.sql.*;
                     System.out.println("\nListando patinetes no alquilados...\n");
                     break;
                 case 6:
-                    System.out.println("\nVolviendo atr s...\n");
+                    System.out.println("\nVolviendo atrás...\n");
                     break;
                 default:
-                    System.out.println("\nOpci n inv lida, vuelva a intentarlo.\n");
+                    System.out.println("\nOpción inválida, vuelva a intentarlo.\n");
             }
         } while (opcion != 6);
     }
     
-    public static void listarEmpleados() throws SQLException {
+    public static String listarEmpleados(Connection conn, String BDNombre) throws SQLException {
+    	Statement stmt = null;
+    	String lista = "\nListando usuarios empleados...\n";
+    	
         try {
-            Statement stmt = conn.createStatement();
+            stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios WHERE rol = 'administrador'");
 
             while (rs.next()) {
+            	lista += ("\n*************************\n");
+            	
+            	String email = rs.getString("email");
                 String nombre = rs.getString("nombre");
-                System.out.println("Empleado: " + nombre);
+                String apellidos = rs.getString("apellidos");
+                int edad = rs.getInt("edad");
+                String dni = rs.getString("dni");
+                String contrasenya = rs.getString("contrasenya");
+                
+                lista += "Email: " + email + "\n" +
+                "Nombre: " + nombre + "\n" +
+               	"Apellidos: " + apellidos + "\n" +
+                "Edad: " + edad + " años" + "\n" +
+                "DNI: " + dni + "\n" +
+                "Contrasenya: " + contrasenya + "\n";
             }
         } catch (SQLException e) {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
-            throw e;
+            e.printStackTrace();
+        } finally {
+        	stmt.close();
         }
+        
+        return lista;
     }
     
-    public static void listarClientes() throws SQLException {
-        try {
-            Statement stmt = conn.createStatement();
+    //Convertirlo a String y devolver un String lista (Usar de ejemplo listarEmpleados)
+    public static void listarClientes(Connection conn, String BDNombre) throws SQLException {
+        Statement stmt = null;
+    	
+    	try {
+            stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios WHERE rol = 'cliente'");
 
             while (rs.next()) {
@@ -79,12 +111,17 @@ import java.sql.*;
         } catch (SQLException e) {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
             throw e;
+        } finally {
+        	stmt.close();
         }
     }
     
-    public static void listarTodosUsuarios() throws SQLException {
-        try {
-            Statement stmt = conn.createStatement();
+    //Convertirlo a String y devolver un String lista (Usar de ejemplo listarEmpleados)
+    public static void listarTodosUsuarios(Connection conn, String BDNombre) throws SQLException {
+    	Statement stmt = null;
+    	
+    	try {
+            stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios");
 
             while (rs.next()) {
@@ -95,11 +132,10 @@ import java.sql.*;
         } catch (SQLException e) {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
             throw e;
+        } finally {
+        	stmt.close();
         }
     }
-
-
-
     
     public static void guardarListado(String lista, String nomArchivo) {
 		File fs = null;
@@ -126,7 +162,7 @@ import java.sql.*;
 				fw.close();
 			}
 			
-			System.out.println("La lista ha sido guardada con  xito!\n");
+			System.out.println("\nLa lista ha sido guardada con éxito!\n");
 			
 		} catch (Exception e) {
 			System.out.println("No se ha podido guardar el listado\n");
