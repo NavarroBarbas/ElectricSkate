@@ -31,7 +31,7 @@ public class MenuPrincipal {
 				
 				switch (opcion) {
 				case 1:
-					//Método Usuarios.MenuUsuarios
+					Usuarios.MenuUsuario(con, "electricskate");
 					break;
 					
 				case 2:
@@ -52,7 +52,6 @@ public class MenuPrincipal {
 					break;
 			
 				default:
-					
 					System.out.println("\nElige un número entre 1 y 5\n");
 					break;
 				}

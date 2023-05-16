@@ -7,10 +7,9 @@ public class ElectricSkate {
 		try {
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/electricskate", "root", "");
 			
-			
+			Usuarios.login(con, "electricskate");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 			
 		}
 

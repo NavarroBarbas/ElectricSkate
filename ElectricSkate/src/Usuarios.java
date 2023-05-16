@@ -1,15 +1,5 @@
-<<<<<<< HEAD
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-=======
 import java.sql.*;
->>>>>>> branch 'master' of git@github.com:NavarroBarbas/ElectricSkate.git
 import java.util.Scanner;
-
-
 
 public abstract class Usuarios {
 
@@ -97,12 +87,12 @@ public abstract class Usuarios {
 				// LLAMO A LA CLASE SCANNER
 				Scanner teclado = new Scanner(System.in);
 				// CREO UN MENU COMO EL MENU PRINCIPAL
-				System.out.println("GESTIONAR USUARIOS (EMPLEADOS/CLIENTES)\n");
-				System.out.println("1. AÃ±adir Usuario Cliente");
-				System.out.println("2. AÃ±adir Usuario Empleado");
-				System.out.println("3. Atras\n");
+				System.out.println("\nGESTIONAR USUARIOS (EMPLEADOS/CLIENTES)\n");
+				System.out.println("1. Añadir Usuario Cliente");
+				System.out.println("2. Añadir Usuario Empleado");
+				System.out.println("3. Atrás\n");
 
-				System.out.println("Elige una opciÃ³n: ");
+				System.out.print("Elige una opción: ");
 				int opcion = teclado.nextInt();
 				// SALTO DE LINEA PARA EVITAR ERROR
 				teclado.nextLine();
@@ -116,7 +106,7 @@ public abstract class Usuarios {
 					crearEmpleado(con, "electricskate");
 					break;
 				case 3:
-					MenuPrincipal.menu();
+					System.out.println("\nVolviendo al menú principal\n");
 					estado = false;
 					break;
 
@@ -138,97 +128,78 @@ public abstract class Usuarios {
 	// CREO EL METODO PARA PODER CREAR UN USUARIO
 	public static void crearCliente(Connection con, String BDNombre) throws SQLException {
 
-		PreparedStatement stmt = null;
+		Statement stmt = null;
 		Scanner teclado = new Scanner(System.in);
 
 		try {
+			stmt = con.createStatement();
 			
-			System.out.println("AÃ‘ADIR USUARIO CLIENTE (Escriba exit para volver atrÃ¡s)");
+			System.out.println("\nAÑ‘ADIR USUARIO CLIENTE (Escriba exit para volver atrás)");
 			// PIDO LOS DATOS AL USUARIO
-			System.out.println("\nNombre: ");
+			System.out.print("\nNombre: ");
 			String nombre = teclado.nextLine();
 			if (nombre.equalsIgnoreCase("exit")) {
 			    return; // SALIR DEL METODO Y VOLVER AL PUNTO DESDE DONDE SE LLAMO 
 			}
-			System.out.println("\nApellidos: ");
+			System.out.print("Apellidos: ");
 			String apellido = teclado.nextLine();
 			if (apellido.equalsIgnoreCase("exit")) {
 			    return; // SALIR DEL METODO Y VOLVER AL PUNTO DESDE DONDE SE LLAMO 
 			}
-			System.out.println("\nEdad: ");
-			String edad = teclado.nextLine();
-			if (edad.equalsIgnoreCase("exit")) {
-			    return; // SALIR DEL METODO Y VOLVER AL PUNTO DESDE DONDE SE LLAMO 
-			}
-			System.out.println("\nDNI(8 numeros seguidos de una letra: ");
+			
+			System.out.print("Edad: ");
+			int edad = teclado.nextInt();
+			teclado.nextLine();
+			
+			System.out.print("DNI(8 numeros seguidos de una letra): ");
 			String dni = teclado.nextLine();
 			if (dni.equalsIgnoreCase("exit")) {
 			    return; // SALIR DEL METODO Y VOLVER AL PUNTO DESDE DONDE SE LLAMO 
 			}
+			
 			// HAGO UN WHILE PARA RECORRER EL DNI Y COMPROBAR SI SE HAN INTRODUCIDO CORRECTAMENTE LOS DIGITOS 
 			while (dni.length() != 9) {
 
-				System.out.println("\nLa secuencia de nÃºmeros introducida no es correcta");
-				System.out.println("Por favor vuelva a introducir su DNI");
+				System.out.println("\nLa secuencia de números introducida no es correcta");
+				System.out.print("Por favor vuelva a introducir su DNI:");
 				dni = teclado.nextLine();
-			}
-			System.out.println("\nLa secuencia de nÃºmeros introducida es correcta");
-			
+			}			
 
-			System.out.println("\nE-mail:");
+			System.out.print("E-mail:");
 			String email = teclado.nextLine();
 			
-			System.out.println("GUARDAR? SI/NO (no vuelve al menÃº anterior");
+			System.out.print("\nDESEA GUARDAR EL USUARIO? SI/NO: ");
 			String opcion=teclado.nextLine();
 			
 			// ASI PUEDE SER EN MAYUSCULA Y MINUSCULA
-			opcion=opcion.toUpperCase();
+			opcion = opcion.toUpperCase();
+			
 			//HAGO EL INSERT PARA INTRODUCIR LOS DATOS EN LA TABLA
-			if (opcion.equals("SI")) {
+			if (opcion.equals("SI") || opcion.equals("S")) {
 				
-				try {
-					//HAGO LA CONSULTA 
-					String consulta = "INSERT INTO usuarios (apellidos, dni, edad, email, nombre, rol) VALUES (?, ?, ?, ?, ?, ?)";
-					stmt = con.prepareStatement(consulta);
-					// ASIGNO LOS VALORES A LOS PARAMETROS DE LA CONSULTA
-					stmt.setString(1, apellido);
-					stmt.setString(2, dni);
-					stmt.setString(3, edad);
-					stmt.setString(4, email);
-					stmt.setString(5, nombre);
-					stmt.setString(6, "Cliente "); 
-					// EjECUTO EL INSERT 
-					int filasinsertadas = stmt.executeUpdate();
-					
-
-		            // SI LAS FILAS NO SON SUPERIORES A 0 DARA UN ERROR 
-		            if (filasinsertadas>0) {
-						System.out.println("\nLos datos fueron introducidos correctamente ");
-					} else {
-						System.out.println("\nLos datos no pudieron ser introducidos");
-					}
-					
-
-					
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}finally {
-					// SI LO QUITO FALLA
-					if (stmt !=null) {
-						stmt.close();
-					}
+				int existeUser = existeUsuario(con, "electricskate", email);
+				
+				if(existeUser == 1) {
+					System.out.println("\nEl usuario ya existe, no se puede añadir");
+					return;
 				}
-			}else {
-				MenuUsuario(con, "electricskate");
+					String consulta = "INSERT INTO usuarios (apellidos, dni, edad, email, nombre, rol)"
+							+ " VALUES ('" + apellido + "', '" + dni + "', '"+ edad +"',"
+							+ " '" + email +"', '" + nombre + "', 'cliente')";
+	
+					stmt.executeUpdate(consulta);
+					
+					System.out.println("\nEl usuario " + nombre + " " + apellido + " ha sido guardado!");	
+					
+			} else {
+				System.out.println("\nSe ha cancelado añadir el usuario");
+				
 			}
 
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			// SI LO QUITO FALLA
-			if (stmt != null) {
-	            stmt.close();
-	        }
+			stmt.close();
 		}
 
 	}
@@ -236,29 +207,35 @@ public abstract class Usuarios {
 	// CREO EL METODO PARA PODER CREAR UN ADMINISTRADOR
 	public static void crearEmpleado(Connection con, String BDNombre) throws SQLException {
 
-		PreparedStatement stmt= null;
+		Statement stmt= null;
 		
 		Scanner teclado= new Scanner(System.in);
 		
 		try {
-			System.out.println("AÃ‘ADIR USUARIO EMPLEADO (Escriba exit para volver atrÃ¡s)");
+			stmt = con.createStatement();
+			
+			System.out.println("\nAÑADIR USUARIO EMPLEADO (Escriba exit para volver atrás)\n");
+			
 			// PIDO LOS DATOS AL USUARIO
-			System.out.println("\nNombre: ");
+			System.out.print("Nombre: ");
 			String nombre = teclado.nextLine();
 			if (nombre.equalsIgnoreCase("exit")) {
 			    return; // SALIR DEL METODO Y VOLVER AL PUNTO DESDE DONDE SE LLAMO 
 			}
-			System.out.println("\nApellidos: ");
+			
+			System.out.print("Apellidos: ");
 			String apellido = teclado.nextLine();
 			if (apellido.equalsIgnoreCase("exit")) {
 			    return; // SALIR DEL METODO Y VOLVER AL PUNTO DESDE DONDE SE LLAMO 
 			}
-			System.out.println("\nEdad: ");
+			
+			System.out.print("Edad: ");
 			String edad = teclado.nextLine();
 			if (edad.equalsIgnoreCase("exit")) {
 			    return; // SALIR DEL METODO Y VOLVER AL PUNTO DESDE DONDE SE LLAMO 
 			}
-			System.out.println("\nDNI(8 numeros seguidos de una letra MayÃºscula: ");
+			
+			System.out.print("DNI (8 numeros seguidos de una letra Mayúscula: ");
 			String dni = teclado.nextLine();
 			if (dni.equalsIgnoreCase("exit")) {
 			    return; // SALIR DEL METODO Y VOLVER AL PUNTO DESDE DONDE SE LLAMO 
@@ -266,34 +243,45 @@ public abstract class Usuarios {
 			// HAGO UN WHILE PARA RECORRER EL DNI Y COMPROBAR SI SE HAN INTRODUCIDO CORRECTAMENTE LOS DIGITOS 
 			while (dni.length() != 9) {
 
-				System.out.println("\nLa secuencia de nÃºmeros introducida no es correcta");
-				System.out.println("Por favor vuelva a introducir su DNI");
+				System.out.println("\nEl DNI no es válido");
+				System.out.print("Por favor vuelva a introducir su DNI:");
 				dni = teclado.nextLine();
 			}
-			System.out.println("\nLa secuencia de nÃºmeros introducida es correcta");
-			System.out.println("\nE-mail:");
+			
+			System.out.print("E-mail:");
 			String email = teclado.nextLine();
-			System.out.println("ContraseÃ±a (3MAYUSCULAS,3MINUSCULAS,2 numeros: ");
+			
+			System.out.print("Contraseña (3 MAYUSCULAS, 3 MINUSCULAS, 2 numeros): ");
 			String contrasenya = teclado.nextLine();
 
 			// CREO TRES VARIABLES PARA CONTAR
 			int mayuscula = 0;
 			int minuscula = 0;
 			int numero = 0;
+			
+			// VERIFICO SI LOS REQUISITOS DE LA CONTRASEÃ‘A SON CORRECTOS 
+		    for (int i = 0; i < contrasenya.length(); i++) {
+		        char caracter = contrasenya.charAt(i);
+		        if (Character.isUpperCase(caracter)) {
+		            mayuscula++;
+		        } else if (Character.isLowerCase(caracter)) {
+		            minuscula++;
+		        } else if (Character.isDigit(caracter)) {
+		            numero++;
+		        }
+		    }
 
-			// HAGO UN WHILE PARA VERIFICAR LA CONTRASEÃ‘A
-			while (!(contrasenya.length() >= 8 && contrasenya.length() <= 8 && mayuscula == 3 && minuscula == 3 && numero == 2)) {
+			//TODO HAGO UN WHILE PARA VERIFICAR LA CONTRASEÃ‘A
+			while (contrasenya.length() <= 8 && mayuscula >= 3 && minuscula >= 3 && numero >= 2) {
 			    // REINICIO LAS VARIABLES DE CONTADOR
 			    mayuscula = 0;
 			    minuscula = 0;
 			    numero = 0;
 
-			    System.out.println("\nLa contraseÃ±a introducida no cumple los parÃ¡metros solicitados.");
-			    System.out.println("Por favor vuelva a introducir su contraseÃ±a:");
-
-			    contrasenya = teclado.nextLine();
-
-			    // VERIFICO SI LOS REQUISITOS DE LA CONTRASEÃ‘A SON CORRECTOS 
+			    System.out.println("\nLa contraseña introducida no cumple los parámetros solicitados.");
+			    System.out.println("Por favor vuelva a introducir su contraseña: ");
+			    contrasenya = teclado.nextLine(); 
+			    
 			    for (int i = 0; i < contrasenya.length(); i++) {
 			        char caracter = contrasenya.charAt(i);
 			        if (Character.isUpperCase(caracter)) {
@@ -306,61 +294,61 @@ public abstract class Usuarios {
 			    }
 			}
 
-			System.out.println("\nLa contraseÃ±a introducida es correcta.");
-			
-			System.out.println("GUARDAR? SI/NO (no vuelve al menÃº anterior");
+			System.out.print("\nGUARDAR? SI/NO (no vuelve al menú anterior)");
 			String opcion=teclado.nextLine();
 			// ELEGIR OPCION EN MAYUSCULA O MINUSCULA 
 			opcion=opcion.toUpperCase();
 			
 			//HAGO EL INSERT PARA INTRODUCIR LOS DATOS EN LA TABLA
-			if (opcion.equals("SI")) {
-				try {
-					
-					String consulta = "INSERT INTO usuarios (apellidos, contrasenya, dni, edad, email, nombre, rol) VALUES (?, ?, ?, ?, ?, ?,?)";
-					stmt = con.prepareStatement(consulta);
-					// ASIGNO LOS VALORES A LOS PARAMETROS DE LA CONSULTA
-					stmt.setString(1, apellido);
-					stmt.setString(2,contrasenya);
-					stmt.setString(3, dni);
-					stmt.setString(4, edad);
-					stmt.setString(5, email);
-					stmt.setString(6, nombre);
-					stmt.setString(7, "Administrador ");
-					
-					
-		            // EjECUTO EL INSERT 
-		            int filasinsertadas= stmt.executeUpdate();
-		            // SI LAS FILAS NO SON SUPERIORES A 0 DARA UN ERROR 
-		            if (filasinsertadas>0) {
-						System.out.println("Los datos fueron introducidos correctamente ");
-					} else {
-						System.out.println("Los datos no pudieron ser introducidos");
-					}
-					
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}finally {
-					// SI LO QUITO FALLA
-					if (stmt != null) {
-			            stmt.close();
-			        }
+			if (opcion.equals("SI") || opcion.equals("S")) {
+				
+				int existeUser = existeUsuario(con, "electricskate", email);
+				
+				if(existeUser == 1) {
+					System.out.println("\nEl usuario ya existe, no se puede añadir");
+					return;
 				}
+								
+				String consulta = "INSERT INTO usuarios (apellidos, contrasenya, dni, edad, email, nombre, rol)"
+					+ " VALUES ('" + apellido + "', '" + contrasenya + "', '" + dni + "', '"+ edad +"',"
+					+ " '" + email +"', '" + nombre + "', 'administrador')";
+					
+				// EjECUTO EL INSERT 
+				stmt.executeUpdate(consulta);
+				
+				System.out.println("\nEl usuario " + nombre + " " + apellido + " ha sido guardado!");
+		            	
 			} else {
-				MenuUsuario(con, "electricskate");
+				System.out.println("\nSe ha cancelado añadir el empleado");	
 			}
 			
-			
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			// SI LO QUITO FALLA
-			if (stmt!=null) {
-				stmt.close();
+			stmt.close();
+		}
+	}
+	
+	public static int existeUsuario(Connection con, String BDNombre, String email) throws SQLException {
+		Statement stmt = null;
+		int user = 0;
+		
+		try {
+			stmt = con.createStatement();
+			
+			String consulta = "SELECT email FROM usuarios WHERE email = '" + email +"'";
+			
+			ResultSet rs = stmt.executeQuery(consulta);
+			
+			while(rs.next()) {
+				user++;
 			}
 			
+		} catch (SQLException e) {
+			stmt.close();
 		}
 		
+		return user;
 	}
 
 }
