@@ -139,10 +139,73 @@ import java.sql.*;
     
     
     //Listar Patinetes Alquilados
-    
+    public static String listarPatinietesAlquilados(Connection conn, String BDNombre) throws SQLException {
+    	Statement stmt = null;
+    	String lista = "\nListando patinetes alquilados...\n";
+    	
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM patinetes WHERE numeroSerie IN (SELECT numeroSerie FROM patinetesUsuarios)");
+
+            while (rs.next()) {
+            	lista += ("\n*************************\n");
+            	
+            	String numSerie = rs.getString("numeroSerie");
+                String marca = rs.getString("marca");
+                String modelo = rs.getString("modelo");
+                double km = rs.getInt("km_recorridos");
+                
+                lista += "Número de Serie: " + numSerie + "\n" +
+                "Marca: " + marca + "\n" +
+               	"Modelo: " + modelo + "\n" +
+                "Kms: " + km + " recorridos" + "\n";
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al ejecutar la consulta: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+        	stmt.close();
+        }
+        
+        return lista;
+    }   
     
     //Listar Patinetes No Alquilados
     
+    public static String listarPatinietesNoAlquilados(Connection conn, String BDNombre) throws SQLException {
+    	Statement stmt = null;
+    	String lista = "\nListando patinetes NO alquilados...\n";
+    	
+        try {
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM patinetes WHERE numeroSerie NOT IN (SELECT numeroSerie FROM patinetesUsuarios)");
+
+            while (rs.next()) {
+            	lista += ("\n*************************\n");
+            	
+            	String email = rs.getString("email");
+                String nombre = rs.getString("nombre");
+                String apellidos = rs.getString("apellidos");
+                int edad = rs.getInt("edad");
+                String dni = rs.getString("dni");
+                String contrasenya = rs.getString("contrasenya");
+                
+                lista += "Email: " + email + "\n" +
+                "Nombre: " + nombre + "\n" +
+               	"Apellidos: " + apellidos + "\n" +
+                "Edad: " + edad + " a�os" + "\n" +
+                "DNI: " + dni + "\n" +
+                "Contrasenya: " + contrasenya + "\n";
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al ejecutar la consulta: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+        	stmt.close();
+        }
+        
+        return lista;
+    }   
     
     
     //Guardar Listados
