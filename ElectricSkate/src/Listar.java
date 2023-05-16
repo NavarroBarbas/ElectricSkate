@@ -46,12 +46,28 @@ import java.sql.*;
                     listarTodosUsuarios(conn, "electricskate");
                   //A�adir if de guardado (Usar de ejemplo Case 1)
                     break;
-                case 4:
-                    System.out.println("\nListando patinetes alquilados...\n");
-                    break;
-                case 5:
-                    System.out.println("\nListando patinetes no alquilados...\n");
-                    break;
+                case 4: // patinetes alquilados
+                    System.out.println(listarPatinetesAlquilados(conn, "electricskate"));
+                    System.out.print("Dese guardar la lista? (S/N): ");
+                    String guardar = scanner.nextLine();
+                    
+                    if(guardar.equalsIgnoreCase("s") || guardar.equalsIgnoreCase("si")) {
+                    	guardarListado(listarPatinetesAlquilados(conn, BDNombre), "patinetes_alquilados");
+                    } else {
+                    	System.out.println("La lista no ha sido guardada!");
+                    }
+                    break;                   
+                case 5: // patinetes no alquilados
+                    System.out.println(listarPatinetesNoAlquilados(conn, "electricskate"));
+                    System.out.print("Dese guardar la lista? (S/N): ");
+                    String guardar = scanner.nextLine();
+                    
+                    if(guardar.equalsIgnoreCase("s") || guardar.equalsIgnoreCase("si")) {
+                    	guardarListado(listarPatinetesNoAlquilados(conn, BDNombre), "patinetes_no_alquilados");
+                    } else {
+                    	System.out.println("La lista no ha sido guardada!");
+                    }
+                    break; 
                 case 6:
                     System.out.println("\nVolviendo atr�s...\n");
                     break;
@@ -139,7 +155,7 @@ import java.sql.*;
     
     
     //Listar Patinetes Alquilados
-    public static String listarPatinietesAlquilados(Connection conn, String BDNombre) throws SQLException {
+    public static String listarPatinetesAlquilados(Connection conn, String BDNombre) throws SQLException {
     	Statement stmt = null;
     	String lista = "\nListando patinetes alquilados...\n";
     	
@@ -172,7 +188,7 @@ import java.sql.*;
     
     //Listar Patinetes No Alquilados
     
-    public static String listarPatinietesNoAlquilados(Connection conn, String BDNombre) throws SQLException {
+    public static String listarPatinetesNoAlquilados(Connection conn, String BDNombre) throws SQLException {
     	Statement stmt = null;
     	String lista = "\nListando patinetes NO alquilados...\n";
     	
