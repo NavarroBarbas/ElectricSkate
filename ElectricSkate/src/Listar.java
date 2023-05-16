@@ -183,19 +183,15 @@ import java.sql.*;
             while (rs.next()) {
             	lista += ("\n*************************\n");
             	
-            	String email = rs.getString("email");
-                String nombre = rs.getString("nombre");
-                String apellidos = rs.getString("apellidos");
-                int edad = rs.getInt("edad");
-                String dni = rs.getString("dni");
-                String contrasenya = rs.getString("contrasenya");
+            	String numSerie = rs.getString("numeroSerie");
+                String marca = rs.getString("marca");
+                String modelo = rs.getString("modelo");
+                double km = rs.getInt("km_recorridos");
                 
-                lista += "Email: " + email + "\n" +
-                "Nombre: " + nombre + "\n" +
-               	"Apellidos: " + apellidos + "\n" +
-                "Edad: " + edad + " a�os" + "\n" +
-                "DNI: " + dni + "\n" +
-                "Contrasenya: " + contrasenya + "\n";
+                lista += "Número de Serie: " + numSerie + "\n" +
+                "Marca: " + marca + "\n" +
+               	"Modelo: " + modelo + "\n" +
+                "Kms: " + km + " recorridos" + "\n";
             }
         } catch (SQLException e) {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
