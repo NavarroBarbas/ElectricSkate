@@ -174,7 +174,7 @@ import java.sql.*;
                 lista += "Número de Serie: " + numSerie + "\n" +
                 "Marca: " + marca + "\n" +
                	"Modelo: " + modelo + "\n" +
-                "Kms: " + km + " recorridos" + "\n";
+                "Km: " + km + " recorridos" + "\n";
             }
         } catch (SQLException e) {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
@@ -187,7 +187,6 @@ import java.sql.*;
     }   
     
     //Listar Patinetes No Alquilados
-    
     public static String listarPatinetesNoAlquilados(Connection conn, String BDNombre) throws SQLException {
     	Statement stmt = null;
     	String lista = "\nListando patinetes NO alquilados...\n";
@@ -207,7 +206,7 @@ import java.sql.*;
                 lista += "Número de Serie: " + numSerie + "\n" +
                 "Marca: " + marca + "\n" +
                	"Modelo: " + modelo + "\n" +
-                "Kms: " + km + " recorridos" + "\n";
+                "Km: " + km + " recorridos" + "\n";
             }
         } catch (SQLException e) {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
