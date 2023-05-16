@@ -19,7 +19,7 @@ import java.sql.*;
             System.out.println("5. Listar patinetes no alquilados");
             System.out.println("6. Atr s\n");
 
-            System.out.print("Elige una opción: ");
+            System.out.print("Elige una opciï¿½n: ");
             opcion = scanner.nextInt();
             scanner.nextLine();
             
@@ -39,12 +39,12 @@ import java.sql.*;
                 case 2:
                     System.out.println("\nListando usuarios clientes...\n");
                     listarClientes(conn, "electricskate");
-                    //Añadir if de guardado (Usar de ejemplo Case 1)
+                    //Aï¿½adir if de guardado (Usar de ejemplo Case 1)
                     break;
                 case 3:
                     System.out.println("\nListando todos los usuarios...\n");
                     listarTodosUsuarios(conn, "electricskate");
-                  //Añadir if de guardado (Usar de ejemplo Case 1)
+                  //Aï¿½adir if de guardado (Usar de ejemplo Case 1)
                     break;
                 case 4:
                     System.out.println("\nListando patinetes alquilados...\n");
@@ -53,10 +53,10 @@ import java.sql.*;
                     System.out.println("\nListando patinetes no alquilados...\n");
                     break;
                 case 6:
-                    System.out.println("\nVolviendo atrás...\n");
+                    System.out.println("\nVolviendo atrï¿½s...\n");
                     break;
                 default:
-                    System.out.println("\nOpción inválida, vuelva a intentarlo.\n");
+                    System.out.println("\nOpciï¿½n invï¿½lida, vuelva a intentarlo.\n");
             }
         } while (opcion != 6);
     }
@@ -82,7 +82,7 @@ import java.sql.*;
                 lista += "Email: " + email + "\n" +
                 "Nombre: " + nombre + "\n" +
                	"Apellidos: " + apellidos + "\n" +
-                "Edad: " + edad + " años" + "\n" +
+                "Edad: " + edad + " aï¿½os" + "\n" +
                 "DNI: " + dni + "\n" +
                 "Contrasenya: " + contrasenya + "\n";
             }
@@ -137,6 +137,15 @@ import java.sql.*;
         }
     }
     
+    
+    //Listar Patinetes Alquilados
+    
+    
+    //Listar Patinetes No Alquilados
+    
+    
+    
+    //Guardar Listados
     public static void guardarListado(String lista, String nomArchivo) {
 		File fs = null;
 		File fd = null;
@@ -162,7 +171,7 @@ import java.sql.*;
 				fw.close();
 			}
 			
-			System.out.println("\nLa lista ha sido guardada con éxito!\n");
+			System.out.println("\nLa lista ha sido guardada con ï¿½xito!\n");
 			
 		} catch (Exception e) {
 			System.out.println("No se ha podido guardar el listado\n");
