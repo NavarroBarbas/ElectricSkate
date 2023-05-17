@@ -37,37 +37,51 @@ import java.sql.*;
                     }
                     break;
                 case 2:
-                    System.out.println("\nListando usuarios clientes...\n");
-                    listarClientes(conn, "electricskate");
-                    //A�adir if de guardado (Usar de ejemplo Case 1)
+                	 String listaClientes = listarClientes(conn, "electricskate");
+                	 System.out.println(listaClientes);
+                     System.out.print("Desea guardar la lista? (S/N): ");
+                     String guardarClientes = scanner.nextLine();
+
+                     if (guardarClientes.equalsIgnoreCase("s") || guardarClientes.equalsIgnoreCase("si")) {
+                         guardarListado(listaClientes, "clientes");
+                     } else {
+                         System.out.println("La lista no ha sido guardada!");
+                     }
                     break;
                 case 3:
-                    System.out.println("\nListando todos los usuarios...\n");
-                    listarTodosUsuarios(conn, "electricskate");
-                  //A�adir if de guardado (Usar de ejemplo Case 1)
-                    break;
+                	  String listaUsuarios = listarTodosUsuarios(conn, "electricskate");
+                	  System.out.println(listaUsuarios);
+                      System.out.print("Desea guardar la lista? (S/N): ");
+                      String guardarUsuarios = scanner.nextLine();
+
+                      if (guardarUsuarios.equalsIgnoreCase("s") || guardarUsuarios.equalsIgnoreCase("si")) {
+                          guardarListado(listaUsuarios, "todos_usuarios");
+                      } else {
+                          System.out.println("La lista no ha sido guardada!");
+                      }
+                      break;
                 case 4: // patinetes alquilados
                     System.out.println(listarPatinetesAlquilados(conn, "electricskate"));
                     System.out.print("Dese guardar la lista? (S/N): ");
-                    String guardar = scanner.nextLine();
-                    
-                    if(guardar.equalsIgnoreCase("s") || guardar.equalsIgnoreCase("si")) {
-                    	guardarListado(listarPatinetesAlquilados(conn, BDNombre), "patinetes_alquilados");
+                    guardar = scanner.nextLine();
+
+                    if (guardar.equalsIgnoreCase("s") || guardar.equalsIgnoreCase("si")) {
+                        guardarListado(listarPatinetesAlquilados(conn, BDNombre), "patinetes_alquilados");
                     } else {
-                    	System.out.println("La lista no ha sido guardada!");
+                        System.out.println("La lista no ha sido guardada!");
                     }
-                    break;                   
+                    break;
                 case 5: // patinetes no alquilados
                     System.out.println(listarPatinetesNoAlquilados(conn, "electricskate"));
                     System.out.print("Dese guardar la lista? (S/N): ");
-                    String guardar = scanner.nextLine();
+                    guardar = scanner.nextLine();
                     
-                    if(guardar.equalsIgnoreCase("s") || guardar.equalsIgnoreCase("si")) {
-                    	guardarListado(listarPatinetesNoAlquilados(conn, BDNombre), "patinetes_no_alquilados");
+                    if (guardar.equalsIgnoreCase("s") || guardar.equalsIgnoreCase("si")) {
+                        guardarListado(listarPatinetesNoAlquilados(conn, BDNombre), "patinetes_no_alquilados");
                     } else {
-                    	System.out.println("La lista no ha sido guardada!");
+                        System.out.println("La lista no ha sido guardada!");
                     }
-                    break; 
+                    break;
                 case 6:
                     System.out.println("\nVolviendo atr�s...\n");
                     break;
@@ -112,47 +126,76 @@ import java.sql.*;
         return lista;
     }
     
-    //Convertirlo a String y devolver un String lista (Usar de ejemplo listarEmpleados)
-    public static void listarClientes(Connection conn, String BDNombre) throws SQLException {
+    public static String listarClientes(Connection conn, String BDNombre) throws SQLException {
         Statement stmt = null;
-    	
-    	try {
+        String lista = "\nListando usuarios clientes...\n";
+
+        try {
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios WHERE rol = 'cliente'");
 
             while (rs.next()) {
+                lista += ("\n*************************\n");
+
+                String email = rs.getString("email");
                 String nombre = rs.getString("nombre");
-                System.out.println("Cliente: " + nombre);
+                String apellidos = rs.getString("apellidos");
+                int edad = rs.getInt("edad");
+                String dni = rs.getString("dni");
+                
+
+                lista += "Email: " + email + "\n" +
+                        "Nombre: " + nombre + "\n" +
+                        "Apellidos: " + apellidos + "\n" +
+                        "Edad: " + edad + " años" + "\n" +
+                        "DNI: " + dni + "\n";
+                        
             }
         } catch (SQLException e) {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
-            throw e;
+            e.printStackTrace();
         } finally {
-        	stmt.close();
+            stmt.close();
         }
+
+        return lista;
     }
-    
-    //Convertirlo a String y devolver un String lista (Usar de ejemplo listarEmpleados)
-    public static void listarTodosUsuarios(Connection conn, String BDNombre) throws SQLException {
-    	Statement stmt = null;
-    	
-    	try {
+        
+    public static String listarTodosUsuarios(Connection conn, String BDNombre) throws SQLException {
+        Statement stmt = null;
+        String lista = "\nListando todos los usuarios...\n";
+
+        try {
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios");
 
             while (rs.next()) {
+                lista += ("\n*************************\n");
+
+                String email = rs.getString("email");
                 String nombre = rs.getString("nombre");
-                String rol = rs.getString("rol");
-                System.out.println("Usuario: " + nombre + " (" + rol + ")");
+                String apellidos = rs.getString("apellidos");
+                int edad = rs.getInt("edad");
+                String dni = rs.getString("dni");
+                String contrasenya = rs.getString("contrasenya");
+
+                lista += "Email: " + email + "\n" +
+                        "Nombre: " + nombre + "\n" +
+                        "Apellidos: " + apellidos + "\n" +
+                        "Edad: " + edad + " años" + "\n" +
+                        "DNI: " + dni + "\n" +
+                        "Contrasenya: " + contrasenya + "\n";
             }
         } catch (SQLException e) {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
-            throw e;
+            e.printStackTrace();
         } finally {
-        	stmt.close();
+            stmt.close();
         }
+
+        return lista;
     }
-    
+
     
     //Listar Patinetes Alquilados
     public static String listarPatinetesAlquilados(Connection conn, String BDNombre) throws SQLException {
