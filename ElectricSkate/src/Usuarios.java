@@ -16,7 +16,7 @@ public abstract class Usuarios {
 			System.out.print("Email: ");
 			email = teclado.nextLine();
 
-			System.out.print("contrasenya: ");
+			System.out.print("contraseña: ");
 			passwd = teclado.nextLine();
 
 			String queryEmail = "SELECT email, contrasenya FROM usuarios " + "WHERE email = '" + email + "'"
@@ -56,14 +56,14 @@ public abstract class Usuarios {
 							estado = false;
 							MenuPrincipal.menu();
 						} else {
-							System.out.println("\nEmpleado o contrasenya incorrecta\n");
+							System.out.println("\nEmpleado o contraseña incorrecta\n");
 						}
 
 					} else {
 						System.out.println("\nEl usuario debe ser administrador\n");
 					}
 				} else {
-					System.out.println("\nEmpleado o contrasenya incorrecta\n");
+					System.out.println("\nEmpleado o contraseña incorrecta\n");
 				}
 
 			} catch (SQLException e) {

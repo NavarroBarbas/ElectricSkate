@@ -17,9 +17,9 @@ import java.sql.*;
             System.out.println("3. Listar todos los usuarios");
             System.out.println("4. Listar patinetes alquilados");
             System.out.println("5. Listar patinetes no alquilados");
-            System.out.println("6. Atr s\n");
+            System.out.println("6. Atrás\n");
 
-            System.out.print("Elige una opciï¿½n: ");
+            System.out.print("Elige una opción: ");
             opcion = scanner.nextInt();
             scanner.nextLine();
             
@@ -33,7 +33,7 @@ import java.sql.*;
                     if(guardar.equalsIgnoreCase("s") || guardar.equalsIgnoreCase("si")) {
                     	guardarListado(listarEmpleados(conn, BDNombre), "empleados");
                     } else {
-                    	System.out.println("La lista no ha sido guardada!");
+                    	System.out.println("\nLa lista no ha sido guardada!");
                     }
                     break;
                 case 2:
@@ -45,7 +45,7 @@ import java.sql.*;
                      if (guardarClientes.equalsIgnoreCase("s") || guardarClientes.equalsIgnoreCase("si")) {
                          guardarListado(listaClientes, "clientes");
                      } else {
-                         System.out.println("La lista no ha sido guardada!");
+                         System.out.println("\nLa lista no ha sido guardada!");
                      }
                     break;
                 case 3:
@@ -57,7 +57,7 @@ import java.sql.*;
                       if (guardarUsuarios.equalsIgnoreCase("s") || guardarUsuarios.equalsIgnoreCase("si")) {
                           guardarListado(listaUsuarios, "todos_usuarios");
                       } else {
-                          System.out.println("La lista no ha sido guardada!");
+                          System.out.println("\nLa lista no ha sido guardada!");
                       }
                       break;
                 case 4: // patinetes alquilados
@@ -68,7 +68,7 @@ import java.sql.*;
                     if (guardar.equalsIgnoreCase("s") || guardar.equalsIgnoreCase("si")) {
                         guardarListado(listarPatinetesAlquilados(conn, BDNombre), "patinetes_alquilados");
                     } else {
-                        System.out.println("La lista no ha sido guardada!");
+                        System.out.println("\nLa lista no ha sido guardada!");
                     }
                     break;
                 case 5: // patinetes no alquilados
@@ -79,14 +79,14 @@ import java.sql.*;
                     if (guardar.equalsIgnoreCase("s") || guardar.equalsIgnoreCase("si")) {
                         guardarListado(listarPatinetesNoAlquilados(conn, BDNombre), "patinetes_no_alquilados");
                     } else {
-                        System.out.println("La lista no ha sido guardada!");
+                        System.out.println("\nLa lista no ha sido guardada!");
                     }
                     break;
                 case 6:
-                    System.out.println("\nVolviendo atrï¿½s...\n");
+                    System.out.println("\nVolviendo atrás...\n");
                     break;
                 default:
-                    System.out.println("\nOpciï¿½n invï¿½lida, vuelva a intentarlo.\n");
+                    System.out.println("\nOpción inválida, vuelva a intentarlo.\n");
             }
         } while (opcion != 6);
     }
@@ -119,6 +119,7 @@ import java.sql.*;
         } catch (SQLException e) {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
             e.printStackTrace();
+            
         } finally {
         	stmt.close();
         }
@@ -128,14 +129,14 @@ import java.sql.*;
     
     public static String listarClientes(Connection conn, String BDNombre) throws SQLException {
         Statement stmt = null;
-        String lista = "\nListando usuarios clientes...\n";
+        String listaClientes = "\nListando usuarios clientes...\n";
 
         try {
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios WHERE rol = 'cliente'");
 
             while (rs.next()) {
-                lista += ("\n*************************\n");
+                listaClientes += ("\n*************************\n");
 
                 String email = rs.getString("email");
                 String nombre = rs.getString("nombre");
@@ -144,33 +145,34 @@ import java.sql.*;
                 String dni = rs.getString("dni");
                 
 
-                lista += "Email: " + email + "\n" +
+                listaClientes += "Email: " + email + "\n" +
                         "Nombre: " + nombre + "\n" +
                         "Apellidos: " + apellidos + "\n" +
-                        "Edad: " + edad + " aÃ±os" + "\n" +
-                        "DNI: " + dni + "\n";
-                        
+                        "Edad: " + edad + " años" + "\n" +
+                        "DNI: " + dni + "\n";          
             }
+            
         } catch (SQLException e) {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
             e.printStackTrace();
+            
         } finally {
             stmt.close();
         }
 
-        return lista;
+        return listaClientes;
     }
         
     public static String listarTodosUsuarios(Connection conn, String BDNombre) throws SQLException {
         Statement stmt = null;
-        String lista = "\nListando todos los usuarios...\n";
+        String listaUsuarios = "\nListando todos los usuarios...\n";
 
         try {
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios");
 
             while (rs.next()) {
-                lista += ("\n*************************\n");
+                listaUsuarios += ("\n*************************\n");
 
                 String email = rs.getString("email");
                 String nombre = rs.getString("nombre");
@@ -178,13 +180,15 @@ import java.sql.*;
                 int edad = rs.getInt("edad");
                 String dni = rs.getString("dni");
                 String contrasenya = rs.getString("contrasenya");
+                String rol = rs.getString("rol");
 
-                lista += "Email: " + email + "\n" +
+                listaUsuarios += "Email: " + email + "\n" +
                         "Nombre: " + nombre + "\n" +
                         "Apellidos: " + apellidos + "\n" +
-                        "Edad: " + edad + " aÃ±os" + "\n" +
+                        "Edad: " + edad + " años" + "\n" +
                         "DNI: " + dni + "\n" +
-                        "Contrasenya: " + contrasenya + "\n";
+                        "Contrasenya: " + contrasenya + "\n" +
+                        "Rol: " + rol + "\n";
             }
         } catch (SQLException e) {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
@@ -193,72 +197,92 @@ import java.sql.*;
             stmt.close();
         }
 
-        return lista;
+        return listaUsuarios;
     }
 
     
     //Listar Patinetes Alquilados
     public static String listarPatinetesAlquilados(Connection conn, String BDNombre) throws SQLException {
     	Statement stmt = null;
-    	String lista = "\nListando patinetes alquilados...\n";
+    	Statement stmt2 = null;
+    	String listaAlq = "\nListando patinetes alquilados...\n";
     	
         try {
             stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM patinetes WHERE numeroSerie IN (SELECT numeroSerie FROM patinetesUsuarios)");
-
+            stmt2 = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM patinetes "
+            		+ "WHERE numeroSerie IN (SELECT numeroSerie FROM patinetesUsuarios)");
+ 
             while (rs.next()) {
-            	lista += ("\n*************************\n");
+            	listaAlq += ("\n*************************\n");
             	
             	String numSerie = rs.getString("numeroSerie");
                 String marca = rs.getString("marca");
                 String modelo = rs.getString("modelo");
                 double km = rs.getInt("km_recorridos");
-                
-                lista += "NÃºmero de Serie: " + numSerie + "\n" +
+                               
+                listaAlq += "Número de Serie: " + numSerie + "\n" +
                 "Marca: " + marca + "\n" +
                	"Modelo: " + modelo + "\n" +
                 "Km: " + km + " recorridos" + "\n";
-            }
+                
+                ResultSet rs2 = stmt2.executeQuery("SELECT nombre, apellidos FROM usuarios "
+                		+ "WHERE email = (SELECT email FROM patinetesUsuarios "
+                		+ "WHERE numeroSerie = '" + numSerie + "')");
+                
+                if(rs2.next()) {
+                	String nombreAlq = rs2.getString("nombre");
+                	String apellidosAlq = rs2.getString("apellidos");
+                	
+                	listaAlq += "Alquilado a: " + nombreAlq + " " + apellidosAlq + "\n" ;
+                }
+               
+            }   
+            
         } catch (SQLException e) {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
             e.printStackTrace();
+            
         } finally {
         	stmt.close();
+        	stmt2.close();
         }
         
-        return lista;
+        return listaAlq;
     }   
     
     //Listar Patinetes No Alquilados
     public static String listarPatinetesNoAlquilados(Connection conn, String BDNombre) throws SQLException {
     	Statement stmt = null;
-    	String lista = "\nListando patinetes NO alquilados...\n";
+    	String listaNoAlq = "\nListando patinetes NO alquilados...\n";
     	
         try {
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM patinetes WHERE numeroSerie NOT IN (SELECT numeroSerie FROM patinetesUsuarios)");
 
             while (rs.next()) {
-            	lista += ("\n*************************\n");
+            	listaNoAlq += ("\n*************************\n");
             	
             	String numSerie = rs.getString("numeroSerie");
                 String marca = rs.getString("marca");
                 String modelo = rs.getString("modelo");
                 double km = rs.getInt("km_recorridos");
                 
-                lista += "NÃºmero de Serie: " + numSerie + "\n" +
+                listaNoAlq += "Número de Serie: " + numSerie + "\n" +
                 "Marca: " + marca + "\n" +
                	"Modelo: " + modelo + "\n" +
                 "Km: " + km + " recorridos" + "\n";
             }
+            
         } catch (SQLException e) {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
             e.printStackTrace();
+            
         } finally {
         	stmt.close();
         }
         
-        return lista;
+        return listaNoAlq;
     }   
     
     
@@ -288,7 +312,7 @@ import java.sql.*;
 				fw.close();
 			}
 			
-			System.out.println("\nLa lista ha sido guardada con ï¿½xito!\n");
+			System.out.println("\nLa lista ha sido guardada con éxito!\n");
 			
 		} catch (Exception e) {
 			System.out.println("No se ha podido guardar el listado\n");
