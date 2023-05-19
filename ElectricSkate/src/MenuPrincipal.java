@@ -12,14 +12,14 @@ public class MenuPrincipal {
 			while(estado) {
 				Scanner teclado = new Scanner(System.in);
 				
-				System.out.println("Menú Principal: ElectricSkate\n");
+				System.out.println("Menï¿½ Principal: ElectricSkate\n");
 				System.out.println("1. Gestionar Usuarios (Empleados/Clientes)");
 				System.out.println("2. Gestionar Patinetes");
 				System.out.println("3. Listar (Empleados/Clientes/Patinetes)");
 				System.out.println("4. Buscar Por DNI");
 				System.out.println("5. Salir\n");
 				
-				System.out.print("Elige una opción: ");
+				System.out.print("Elige una opciï¿½n: ");
 				int opcion = teclado.nextInt();
 				teclado.nextLine();
 				
@@ -37,18 +37,18 @@ public class MenuPrincipal {
 					break;
 					
 				case 4:
-					//Método Usuarios.buscardni
+					//Mï¿½todo Usuarios.buscardni
                     System.out.println("\nBuscar por DNI:\n");
-                    //buscarDni(conn, "electricskate");
+                    Usuarios.buscarDni(con, "electricskate");
 					break;
 
 				case 5: 
-					System.out.println("\nAdiós\n");
+					System.out.println("\nAdiï¿½s\n");
 					Usuarios.login(con, "electricskate");
 					break;
 			
 				default:
-					System.out.println("\nElige un número entre 1 y 5\n");
+					System.out.println("\nElige un nï¿½mero entre 1 y 5\n");
 					break;
 				}    
 			}
