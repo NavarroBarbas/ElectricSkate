@@ -1,7 +1,6 @@
 import java.sql.*;
 
 public class ElectricSkate {
-
 	public static void main(String[] args) {
 		
 		try {
@@ -9,10 +8,7 @@ public class ElectricSkate {
 			
 			Usuarios.login(con, "electricskate");
 		} catch (SQLException e) {
-			e.printStackTrace();
-			
+			e.printStackTrace();	
 		}
-
 	}
-
 }

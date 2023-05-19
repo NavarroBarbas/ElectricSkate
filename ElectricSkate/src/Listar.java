@@ -3,7 +3,7 @@ import java.io.FileWriter;
 import java.util.Scanner;
 import java.sql.*;
 
- 	 class Listar {
+class Listar {
 
     public static void MenuListar(Connection conn, String BDNombre) throws SQLException {
         Scanner scanner = new Scanner(System.in);

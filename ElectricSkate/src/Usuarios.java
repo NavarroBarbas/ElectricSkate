@@ -177,7 +177,7 @@ public abstract class Usuarios {
 			//HAGO EL INSERT PARA INTRODUCIR LOS DATOS EN LA TABLA
 			if (opcion.equals("SI") || opcion.equals("S")) {
 				
-				int existeUser = existeUsuario(con, "electricskate", email);
+				int existeUser = existeUsuario(con, "electricskate", dni);
 				
 				if(existeUser == 1) {
 					System.out.println("\nEl usuario ya existe, no se puede añadir");
@@ -302,7 +302,7 @@ public abstract class Usuarios {
 			//HAGO EL INSERT PARA INTRODUCIR LOS DATOS EN LA TABLA
 			if (opcion.equals("SI") || opcion.equals("S")) {
 				
-				int existeUser = existeUsuario(con, "electricskate", email);
+				int existeUser = existeUsuario(con, "electricskate", dni);
 				
 				if(existeUser == 1) {
 					System.out.println("\nEl usuario ya existe, no se puede añadir");
@@ -329,14 +329,14 @@ public abstract class Usuarios {
 		}
 	}
 	
-	public static int existeUsuario(Connection con, String BDNombre, String email) throws SQLException {
+	public static int existeUsuario(Connection con, String BDNombre, String dni) throws SQLException {
 		Statement stmt = null;
 		int user = 0;
 		
 		try {
 			stmt = con.createStatement();
 			
-			String consulta = "SELECT email FROM usuarios WHERE email = '" + email +"'";
+			String consulta = "SELECT dni FROM usuarios WHERE dni = '" + dni +"'";
 			
 			ResultSet rs = stmt.executeQuery(consulta);
 			
