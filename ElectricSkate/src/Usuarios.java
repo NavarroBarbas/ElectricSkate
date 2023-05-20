@@ -16,7 +16,7 @@ public abstract class Usuarios {
 			System.out.print("Email: ");
 			email = teclado.nextLine();
 
-			System.out.print("contraseï¿½a: ");
+			System.out.print("contraseña: ");
 			passwd = teclado.nextLine();
 
 			String queryEmail = "SELECT email, contrasenya FROM usuarios " + "WHERE email = '" + email + "'"
@@ -56,14 +56,14 @@ public abstract class Usuarios {
 							estado = false;
 							MenuPrincipal.menu();
 						} else {
-							System.out.println("\nEmpleado o contraseï¿½a incorrecta\n");
+							System.out.println("\nEmpleado o contraseña incorrecta\n");
 						}
 
 					} else {
 						System.out.println("\nEl usuario debe ser administrador\n");
 					}
 				} else {
-					System.out.println("\nEmpleado o contraseï¿½a incorrecta\n");
+					System.out.println("\nEmpleado o contraseña incorrecta\n");
 				}
 
 			} catch (SQLException e) {
@@ -88,11 +88,11 @@ public abstract class Usuarios {
 				Scanner teclado = new Scanner(System.in);
 				// CREO UN MENU COMO EL MENU PRINCIPAL
 				System.out.println("\nGESTIONAR USUARIOS (EMPLEADOS/CLIENTES)\n");
-				System.out.println("1. Aï¿½adir Usuario Cliente");
-				System.out.println("2. Aï¿½adir Usuario Empleado");
-				System.out.println("3. Atrï¿½s\n");
+				System.out.println("1. Añadir Usuario Cliente");
+				System.out.println("2. Añadir Usuario Empleado");
+				System.out.println("3. Atrás\n");
 
-				System.out.print("Elige una opciï¿½n: ");
+				System.out.print("Elige una opción: ");
 				int opcion = teclado.nextInt();
 				// SALTO DE LINEA PARA EVITAR ERROR
 				teclado.nextLine();
@@ -106,7 +106,7 @@ public abstract class Usuarios {
 					crearEmpleado(con, "electricskate");
 					break;
 				case 3:
-					System.out.println("\nVolviendo al menï¿½ principal\n");
+					System.out.println("\nVolviendo al menú principal\n");
 					estado = false;
 					break;
 
@@ -134,7 +134,7 @@ public abstract class Usuarios {
 		try {
 			stmt = con.createStatement();
 			
-			System.out.println("\nAÑ‘ADIR USUARIO CLIENTE (Escriba exit para volver atrï¿½s)");
+			System.out.println("\nAÑ‘ADIR USUARIO CLIENTE (Escriba exit para volver atrás)");
 			// PIDO LOS DATOS AL USUARIO
 			System.out.print("\nNombre: ");
 			String nombre = teclado.nextLine();
@@ -160,7 +160,7 @@ public abstract class Usuarios {
 			// HAGO UN WHILE PARA RECORRER EL DNI Y COMPROBAR SI SE HAN INTRODUCIDO CORRECTAMENTE LOS DIGITOS 
 			while (dni.length() != 9) {
 
-				System.out.println("\nLa secuencia de nï¿½meros introducida no es correcta");
+				System.out.println("\nLa secuencia de números introducida no es correcta");
 				System.out.print("Por favor vuelva a introducir su DNI:");
 				dni = teclado.nextLine();
 			}			
@@ -180,7 +180,7 @@ public abstract class Usuarios {
 				int existeUser = existeUsuario(con, "electricskate", dni);
 				
 				if(existeUser == 1) {
-					System.out.println("\nEl usuario ya existe, no se puede aï¿½adir");
+					System.out.println("\nEl usuario ya existe, no se puede añadir");
 					return;
 				}
 					String consulta = "INSERT INTO usuarios (apellidos, dni, edad, email, nombre, rol)"
@@ -192,7 +192,7 @@ public abstract class Usuarios {
 					System.out.println("\nEl usuario " + nombre + " " + apellido + " ha sido guardado!");	
 					
 			} else {
-				System.out.println("\nSe ha cancelado aï¿½adir el usuario");
+				System.out.println("\nSe ha cancelado añadir el usuario");
 				
 			}
 
@@ -214,7 +214,7 @@ public abstract class Usuarios {
 		try {
 			stmt = con.createStatement();
 			
-			System.out.println("\nAï¿½ADIR USUARIO EMPLEADO (Escriba exit para volver atrï¿½s)\n");
+			System.out.println("\nAÑADIR USUARIO EMPLEADO (Escriba exit para volver atrás)\n");
 			
 			// PIDO LOS DATOS AL USUARIO
 			System.out.print("Nombre: ");
@@ -235,7 +235,7 @@ public abstract class Usuarios {
 			    return; // SALIR DEL METODO Y VOLVER AL PUNTO DESDE DONDE SE LLAMO 
 			}
 			
-			System.out.print("DNI (8 numeros seguidos de una letra Mayï¿½scula: ");
+			System.out.print("DNI (8 numeros seguidos de una letra Mayúscula: ");
 			String dni = teclado.nextLine();
 			if (dni.equalsIgnoreCase("exit")) {
 			    return; // SALIR DEL METODO Y VOLVER AL PUNTO DESDE DONDE SE LLAMO 
@@ -243,7 +243,7 @@ public abstract class Usuarios {
 			// HAGO UN WHILE PARA RECORRER EL DNI Y COMPROBAR SI SE HAN INTRODUCIDO CORRECTAMENTE LOS DIGITOS 
 			while (dni.length() != 9) {
 
-				System.out.println("\nEl DNI no es vï¿½lido");
+				System.out.println("\nEl DNI no es válido");
 				System.out.print("Por favor vuelva a introducir su DNI:");
 				dni = teclado.nextLine();
 			}
@@ -251,7 +251,7 @@ public abstract class Usuarios {
 			System.out.print("E-mail:");
 			String email = teclado.nextLine();
 			
-			System.out.print("Contraseï¿½a (3 MAYUSCULAS, 3 MINUSCULAS, 2 numeros): ");
+			System.out.print("Contraseña (3 MAYUSCULAS, 3 MINUSCULAS, 2 numeros): ");
 			String contrasenya = teclado.nextLine();
 
 			// CREO TRES VARIABLES PARA CONTAR
@@ -278,8 +278,8 @@ public abstract class Usuarios {
 			    minuscula = 0;
 			    numero = 0;
 
-			    System.out.println("\nLa contraseï¿½a introducida no cumple los parï¿½metros solicitados.");
-			    System.out.println("Por favor vuelva a introducir su contraseï¿½a: ");
+			    System.out.println("\nLa contraseña introducida no cumple los parámetros solicitados.");
+			    System.out.println("Por favor vuelva a introducir su contraseña: ");
 			    contrasenya = teclado.nextLine(); 
 			    
 			    for (int i = 0; i < contrasenya.length(); i++) {
@@ -294,7 +294,7 @@ public abstract class Usuarios {
 			    }
 			}
 
-			System.out.print("\nGUARDAR? SI/NO (no vuelve al menï¿½ anterior)");
+			System.out.print("\nGUARDAR? SI/NO (no vuelve al menú anterior)");
 			String opcion=teclado.nextLine();
 			// ELEGIR OPCION EN MAYUSCULA O MINUSCULA 
 			opcion=opcion.toUpperCase();
@@ -305,7 +305,7 @@ public abstract class Usuarios {
 				int existeUser = existeUsuario(con, "electricskate", dni);
 				
 				if(existeUser == 1) {
-					System.out.println("\nEl usuario ya existe, no se puede aï¿½adir");
+					System.out.println("\nEl usuario ya existe, no se puede añadir");
 					return;
 				}
 								
@@ -319,7 +319,7 @@ public abstract class Usuarios {
 				System.out.println("\nEl usuario " + nombre + " " + apellido + " ha sido guardado!");
 		            	
 			} else {
-				System.out.println("\nSe ha cancelado aï¿½adir el empleado");	
+				System.out.println("\nSe ha cancelado añadir el empleado");	
 			}
 			
 		} catch (SQLException e) {
@@ -354,7 +354,7 @@ public abstract class Usuarios {
 	// comprobar DNI
 	public static void buscarDni (Connection con, String BDNombre) throws SQLException {
 		Scanner teclado = new Scanner(System.in);
-		System.out.println("Introduzca el DNI/NIE a buscar (sin guiones): ");
+		System.out.print("Introduzca el DNI/NIE a buscar (sin guiones): ");
 		String dni = teclado.nextLine();
 		
 		if (existeUsuario(con, BDNombre, dni) == 1) { // el usuario existe
@@ -377,13 +377,19 @@ public abstract class Usuarios {
 	            	
 	                
 	                // listamos el usuario solicitado
-	                lista += "Email: " + email + "\n" +
-	                "Nombre: " + nombre + "\n" +
-	               	"Apellidos: " + apellidos + "\n" +
-	                "Edad: " + edad + " aï¿½os" + "\n" +
-	                "DNI: " + dni + "\n" +
-	                "Contrasenya: " + contrasenya + "\n" +
-	                "Rol: " + rol + "\n";
+	                lista += "\n*************************\n" +
+	                		"\nEmail: " + email + "\n" +
+	                		"Nombre: " + nombre + "\n" +
+	                		"Apellidos: " + apellidos + "\n" +
+	                		"Edad: " + edad + " años" + "\n" +
+	                		"DNI: " + dni + "\n";
+	                
+	                if(contrasenya != null) {
+	                	lista +=  "Contraseña: " + contrasenya + "\n";
+	                }
+	               
+	                lista += "Rol: " + rol + "\n" + 
+	                		"\n*************************\n";
 	            	}
 	                
 	                System.out.println(lista);
@@ -398,7 +404,7 @@ public abstract class Usuarios {
 
 			
 		} else { // el usuario no existe
-			System.out.println("El DNI/NIE introducido no coincide con ningÃºn usuario.");
+			System.out.println("El DNI/NIE introducido no coincide con ningún usuario.");
 		}
 		
 	}

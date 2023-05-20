@@ -112,9 +112,9 @@ class Listar {
                 lista += "Email: " + email + "\n" +
                 "Nombre: " + nombre + "\n" +
                	"Apellidos: " + apellidos + "\n" +
-                "Edad: " + edad + " aï¿½os" + "\n" +
+                "Edad: " + edad + " años" + "\n" +
                 "DNI: " + dni + "\n" +
-                "Contrasenya: " + contrasenya + "\n";
+                "Contraseña: " + contrasenya + "\n";
             }
         } catch (SQLException e) {
             System.out.println("Error al ejecutar la consulta: " + e.getMessage());
@@ -187,7 +187,7 @@ class Listar {
                         "Apellidos: " + apellidos + "\n" +
                         "Edad: " + edad + " años" + "\n" +
                         "DNI: " + dni + "\n" +
-                        "Contrasenya: " + contrasenya + "\n" +
+                        "Contraseña: " + contrasenya + "\n" +
                         "Rol: " + rol + "\n";
             }
         } catch (SQLException e) {
