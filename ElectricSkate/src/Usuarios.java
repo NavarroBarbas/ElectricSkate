@@ -251,7 +251,7 @@ public abstract class Usuarios {
 			System.out.print("E-mail:");
 			String email = teclado.nextLine();
 			
-			System.out.print("Contraseña (3 MAYUSCULAS, 3 MINUSCULAS, 2 numeros): ");
+			System.out.print("Contraseña (3 MAYUSCULAS, 3 MINUSCULAS, 2 números): ");
 			String contrasenya = teclado.nextLine();
 
 			// CREO TRES VARIABLES PARA CONTAR
@@ -259,7 +259,7 @@ public abstract class Usuarios {
 			int minuscula = 0;
 			int numero = 0;
 			
-			// VERIFICO SI LOS REQUISITOS DE LA CONTRASEÃ‘A SON CORRECTOS 
+			// VERIFICO SI LOS REQUISITOS DE LA CONTRASEÑ‘A SON CORRECTOS 
 		    for (int i = 0; i < contrasenya.length(); i++) {
 		        char caracter = contrasenya.charAt(i);
 		        if (Character.isUpperCase(caracter)) {
@@ -271,8 +271,8 @@ public abstract class Usuarios {
 		        }
 		    }
 
-			//TODO HAGO UN WHILE PARA VERIFICAR LA CONTRASEÃ‘A
-			while (contrasenya.length() <= 8 && mayuscula >= 3 && minuscula >= 3 && numero >= 2) {
+			//TODO HAGO UN WHILE PARA VERIFICAR LA CONTRASEÑ‘A
+			while (contrasenya.length() < 8 || mayuscula < 3 || minuscula < 3 || numero < 2) {
 			    // REINICIO LAS VARIABLES DE CONTADOR
 			    mayuscula = 0;
 			    minuscula = 0;
@@ -329,7 +329,8 @@ public abstract class Usuarios {
 		}
 	}
 	
-	public static int existeUsuario(Connection con, String BDNombre, String dni) throws SQLException {
+	public static int existeUsuario(Connection con, String BDNombre, String dni) 
+			throws SQLException {
 		Statement stmt = null;
 		int user = 0;
 		
