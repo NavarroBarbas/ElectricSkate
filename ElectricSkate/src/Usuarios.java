@@ -294,7 +294,7 @@ public abstract class Usuarios {
 			    }
 			}
 
-			System.out.print("\nGUARDAR? SI/NO (no vuelve al menú anterior)");
+			System.out.print("\nGUARDAR? SI/NO");
 			String opcion=teclado.nextLine();
 			// ELEGIR OPCION EN MAYUSCULA O MINUSCULA 
 			opcion=opcion.toUpperCase();
