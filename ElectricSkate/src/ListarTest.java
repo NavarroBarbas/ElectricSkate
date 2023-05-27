@@ -29,7 +29,7 @@ public class ListarTest {
 
 	@Test
 	public void testListarEmpleados() throws SQLException {
-		//Se guarda lista de empleados
+		//Se guarda lista de empleados.
 	    String empleados = Listar.listarEmpleados(con, "electricskate");
 	    //Se verifica que no sea igual a la lista de empleados obtenida. 
 	    Assert.assertNotEquals("\nListando usuarios empleados...\n", empleados);
