@@ -405,7 +405,7 @@ public abstract class Usuarios {
 
 			
 		} else { // el usuario no existe
-			System.out.println("El DNI/NIE introducido no coincide con ningún usuario.");
+			System.out.println("\nEl DNI/NIE introducido no coincide con ningún usuario.\n");
 		}
 		
 	}
