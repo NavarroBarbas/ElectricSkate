@@ -33,8 +33,16 @@ public class ListarTest {
 	}
 
 	@Test
-	public void testListarClientes() {
-		throw new RuntimeException("not yet implemented");
+	public void testListarClientes() throws SQLException {
+		//Guardamos la lista de clientes
+		//Si no hay ninguno simplemente devuelve la línea "\nListando usuarios clientes...\n"
+		//Ya que la variable se inicializa así.
+		String clientes = Listar.listarClientes(con, "electricskate");
+		
+		//En este caso como tenemos clientes no nos devolvería solo esa frase
+		Assert.assertNotEquals("\nListando usuarios clientes...\n", clientes);
+		
+		System.out.println(clientes);		
 	}
 
 	@Test
