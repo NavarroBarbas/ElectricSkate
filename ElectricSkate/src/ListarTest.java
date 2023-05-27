@@ -15,7 +15,7 @@ public class ListarTest {
 		
 		try {
 			//Nos conectamos a la BBDD antes de ejecutar la clase
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/electricskate", "root", "");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/electricskate", "root", "");
 		} catch (SQLException e) {
 			e.printStackTrace();	
 		}
@@ -28,18 +28,24 @@ public class ListarTest {
 	}
 
 	@Test
-	public void testListarEmpleados() {
-		throw new RuntimeException("not yet implemented");
+	public void testListarEmpleados() throws SQLException {
+		//Se guarda lista de empleados
+	    String empleados = Listar.listarEmpleados(con, "electricskate");
+	    //Se verifica que no sea igual a la lista de empleados obtenida. 
+	    Assert.assertNotEquals("\nListando usuarios empleados...\n", empleados);
+	    //Se imprime en pantalla 
+	    System.out.println(empleados);
 	}
+
 
 	@Test
 	public void testListarClientes() throws SQLException {
 		//Guardamos la lista de clientes
-		//Si no hay ninguno simplemente devuelve la línea "\nListando usuarios clientes...\n"
-		//Ya que la variable se inicializa así.
+		//Si no hay ninguno simplemente devuelve la lï¿½nea "\nListando usuarios clientes...\n"
+		//Ya que la variable se inicializa asï¿½.
 		String clientes = Listar.listarClientes(con, "electricskate");
 		
-		//En este caso como tenemos clientes no nos devolvería solo esa frase
+		//En este caso como tenemos clientes no nos devolverï¿½a solo esa frase
 		Assert.assertNotEquals("\nListando usuarios clientes...\n", clientes);
 		
 		System.out.println(clientes);		
