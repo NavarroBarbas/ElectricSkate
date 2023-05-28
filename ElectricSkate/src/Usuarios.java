@@ -1,8 +1,28 @@
 import java.sql.*;
 import java.util.Scanner;
 
+/**
+ * En esta clase tendremos todo lo relacionado con la gestión de los usuarios. 
+ * Incluido el submenú para la gestión de los usuarios.
+ * 
+ * @author Javier Navarro <p>
+ * Andreu Julià <p>
+ * Valentín Silva <p>
+ * Pedro Caaveiro <p>
+ * Juan Castresana
+ *
+ */
 public abstract class Usuarios {
 
+	/**
+	 * Este método nos permitirá registrarnos correctamente en nuestro programa. 
+	 * Comprobará si el usuario es administrador o cliente, en caso de ser el primero 
+	 * nos llevará al menú principal.
+	 * 
+	 * @param con Conexión a la base de datos.
+	 * @param BDNombre	Nombre de la base de datos.
+	 * @throws SQLException Mostrará las excepciones provocadas por la base de datos.
+	 */
 	public static void login(Connection con, String BDNombre) throws SQLException {
 		boolean estado = true;
 
@@ -74,6 +94,16 @@ public abstract class Usuarios {
 		}
 	}
 
+	/**
+	 * Este método será el menú para la gestión del usuario, tendrá dos opciones posibles 
+	 * para gestionarlos: <p>
+	 * - Añadir un usuario empleado <p>
+	 * - Añadir un usuario cliente <p>
+	 * 
+	 * @param con Conexión a la base de datos.
+	 * @param BDNombre	Nombre de la base de datos.
+	 * @throws SQLException Mostrará las excepciones provocadas por la base de datos.
+	 */
 	public static void MenuUsuario(Connection con, String BDNombre) throws SQLException {
 
 		// HAGO LA CONEXION A LA BASE DE DATOS
@@ -125,7 +155,14 @@ public abstract class Usuarios {
 
 	}
 
-	// CREO EL METODO PARA PODER CREAR UN USUARIO
+	/**
+	 * El método crearCliente nos permitirá añadir un usuario cliente 
+	 * nuevo a nuestra base de datos, comprobando si existe previamente o no.
+	 * 
+	 * @param con Conexión a la base de datos.
+	 * @param BDNombre	Nombre de la base de datos.
+	 * @throws SQLException Mostrará las excepciones provocadas por la base de datos.
+	 */
 	public static void crearCliente(Connection con, String BDNombre) throws SQLException {
 
 		Statement stmt = null;
@@ -204,7 +241,14 @@ public abstract class Usuarios {
 
 	}
 
-	// CREO EL METODO PARA PODER CREAR UN ADMINISTRADOR
+	/**
+	 * El método crearCliente nos permitirá añadir un usuario cliente 
+	 * nuevo a nuestra base de datos, comprobando si existe previamente o no.
+	 * 
+	 * @param con Conexión a la base de datos.
+	 * @param BDNombre	Nombre de la base de datos.
+	 * @throws SQLException Mostrará las excepciones provocadas por la base de datos.
+	 */
 	public static void crearEmpleado(Connection con, String BDNombre) throws SQLException {
 
 		Statement stmt= null;
@@ -329,6 +373,17 @@ public abstract class Usuarios {
 		}
 	}
 	
+	/**
+	 * El método existeUsuario nos permitirá comprobar si existe un usuario o no 
+	 * pasándole como parámetro el DNI del usuario que queremos comprobar, 
+	 * nos devolverá un int, si existe será un 1 y si no, un 0.
+	 * 
+	 * @param con Conexión a la base de datos.
+	 * @param BDNombre	Nombre de la base de datos.
+	 * @param dni DNI del usuario que queremos comprobar que exista
+	 * @return Nos devolverá un int, con valor 0 o 1, si es 1 el usuario existe, si es 0 no.
+	 * @throws SQLException Mostrará las excepciones provocadas por la base de datos.
+	 */
 	public static int existeUsuario(Connection con, String BDNombre, String dni) 
 			throws SQLException {
 		Statement stmt = null;
@@ -352,7 +407,14 @@ public abstract class Usuarios {
 		return user;
 	}
 	
-	// comprobar DNI
+	/**
+	 * El método buscarDNI nos permitirá buscar por el DNI cualquier usuario, 
+	 * nos mostrará toda la información necesaria sobre ese usuario, incluido su rol.
+	 * 
+	 * @param con Conexión a la base de datos.
+	 * @param BDNombre	Nombre de la base de datos.
+	 * @throws SQLException Mostrará las excepciones provocadas por la base de datos.
+	 */
 	public static void buscarDni (Connection con, String BDNombre) throws SQLException {
 		Scanner teclado = new Scanner(System.in);
 		System.out.print("Introduzca el DNI/NIE a buscar (sin guiones): ");
@@ -403,7 +465,6 @@ public abstract class Usuarios {
 	        	stmt.close();
 	        }
 
-			
 		} else { // el usuario no existe
 			System.out.println("\nEl DNI/NIE introducido no coincide con ningún usuario.\n");
 		}

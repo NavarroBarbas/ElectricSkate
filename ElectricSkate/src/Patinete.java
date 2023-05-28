@@ -1,8 +1,29 @@
 import java.sql.*;
 import java.util.Scanner;
 
+/**
+ * Esta clase tendrá todo lo relacionado con la gestión de los patinetes, además estará 
+ * el menú para gestionar todo esto.
+ * 
+ * @author Javier Navarro <p>
+ * Andreu Julià <p>
+ * Valentín Silva <p>
+ * Pedro Caaveiro <p>
+ * Juan Castresana
+ *
+ */
 public class Patinete {
-
+	
+	/**
+	 * Este método contendrá todo el menú para gestionar patinetes, con las opciones:
+	 * - Añadir un nuevo patinete <p>
+	 * - Alquilar un patinete <p>
+	 * - Devolver un patinete <p>
+	 * 
+	 * @param con Conexión a la base de datos.
+	 * @param BDNombre	Nombre de la base de datos.
+	 * @throws SQLException	Mostrará las excepciones provocadas por la base de datos.
+	 */
 	public static void MenuGestionarPatinetes(Connection con, String BDNombre) throws SQLException {
 		
 
@@ -99,6 +120,17 @@ public class Patinete {
 
 	}
 	
+	/**
+	 * Este método permitirá añadir un nuevo patinete a la base de datos.
+	 * 
+	 * @param con Conexión a la base de datos.
+	 * @param BDNombre	Nombre de la base de datos.
+	 * @param numSerie Número de serie del patinete.
+	 * @param marca Marca del patinete.
+	 * @param modelo Modelo del patinete.
+	 * @param color Color del patinete.
+	 * @throws SQLException Mostrará las excepciones provocadas por la base de datos.
+	 */
 	public static void anyadirPatinete(Connection con, String BDNombre, String numSerie, String marca, String modelo,
 			String color) throws SQLException {
 
@@ -134,6 +166,18 @@ public class Patinete {
 
 	}
 	
+	/**
+	 * El método alquilarPatinete nos permitirá alquilar un patinete a un usuario, 
+	 * solo un patinete puede estar a un usuario y un usuario solo puede tener
+	 * un patinete en alquiler. Este alquiler se guardará en otra tabla de la base
+	 * de datos llamada patineteusuarios.
+	 * 
+	 * @param con Conexión a la base de datos.
+	 * @param BDNombre	Nombre de la base de datos.
+	 * @param numSerieAl Número de serie del patinete que queremos alquilar.
+	 * @param emailAlquiler Email del usuario al que le vamos a alquilar el patinete.
+	 * @throws SQLException Mostrará las excepciones provocadas por la base de datos.
+	 */
 	public static void alquilerPatinete(Connection con, String BDNombre, String numSerieAl, String emailAlquiler)
 			throws SQLException {
 		Scanner teclado = new Scanner(System.in); 
@@ -206,20 +250,29 @@ public class Patinete {
 				}
 				if (validacionEmailAlquiler != 0) {
 					System.out.println("El cliente con email " + emailAlquiler + " ya tiene un alquiler.");
-				}
-
-					
+				}		
 			}
-
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			
 		} finally {
 			stmt.close();
 		}
-
 	}
 	
+	/**
+	 * El método devolucionPatinete nos permitirá devolver el alquiler de 
+	 * un patinete, añadiendo el email del usuario y los km recorridos por este. 
+	 * Se borrará de la base de datos de la tabla patinetesusuarios y se 
+	 * actualizarán los km del patinete.
+	 * 
+	 * @param con Conexión a la base de datos.
+	 * @param BDNombre	Nombre de la base de datos.
+	 * @param emailDev Email del cliente que devuelve el patinete.
+	 * @param kmPatinete Km que ha recorrido el patinete con el usuario.
+	 * @throws SQLException Mostrará las excepciones provocadas por la base de datos.
+	 */
 	public static void devolucionPatinete(Connection con, String BDNombre, String emailDev, int kmPatinete) throws SQLException {
 		Scanner teclado = new Scanner(System.in); 
 		int existeAlquiler = 0;

@@ -3,8 +3,29 @@ import java.io.FileWriter;
 import java.util.Scanner;
 import java.sql.*;
 
-class Listar {
+/**
+ * Clase Listar, contiene todo lo necesario para crear 
+ * y guardar listas, tanto de usuarios como de patinetes.
+ * 
+ * @author Javier Navarro, 
+ * Andreu Julià, 
+ * Valentín Silva, 
+ * Pedro Caaveiro, 
+ * Juan Castresana
+ *
+ */
 
+public class Listar {
+	
+	/**
+	 * El método MenuListar contendrá el menú sobre las opciones disponibles 
+	 * para listar Usuarios o Patinetes, además nos pedirá si queremos guardar 
+	 * dicho listado o no.
+	 * 
+	 * @param conn Conexión a la base de datos.
+	 * @param BDNombre	Nombre de la base de datos.
+	 * @throws SQLException	Mostrará las excepciones provocadas por la base de datos.
+	 */
     public static void MenuListar(Connection conn, String BDNombre) throws SQLException {
         Scanner scanner = new Scanner(System.in);
         
@@ -91,6 +112,15 @@ class Listar {
         } while (opcion != 6);
     }
     
+    /**
+     * El método listarEmpleados nos devolverá un String con todos los datos de 
+     * los empleados (Email, Nombre, Apellidos, Edad, DNI, Contraseña).
+     * 
+     * @param conn Conexión a la base de datos.
+     * @param BDNombre Nombre de la base de datos.
+     * @return Devolverá un String con la lista de usuarios Empleados.
+     * @throws SQLException Mostrará las excepciones provocadas por la base de datos.
+     */
     public static String listarEmpleados(Connection conn, String BDNombre) throws SQLException {
     	Statement stmt = null;
     	String lista = "\nListando usuarios empleados...\n";
@@ -127,6 +157,16 @@ class Listar {
         return lista;
     }
     
+    
+    /**
+     * El método listarClientes nos devolverá un String con todos los datos de 
+     * los clientes (Email, Nombre, Apellidos, Edad, DNI).
+     * 
+     * @param conn Conexión a la base de datos.
+     * @param BDNombre Nombre de la base de datos.
+     * @return Devolverá un String con la lista de usuarios Clientes.
+     * @throws SQLException Mostrará las excepciones provocadas por la base de datos.
+     */
     public static String listarClientes(Connection conn, String BDNombre) throws SQLException {
         Statement stmt = null;
         String listaClientes = "\nListando usuarios clientes...\n";
@@ -163,6 +203,15 @@ class Listar {
         return listaClientes;
     }
         
+    /**
+     * El método listarTodosUsuarios nos devolverá un String con todos los datos de 
+     * los usuarios registrados en el sistema incluido su rol 
+     * (Email, Nombre, Apellidos, Edad, DNI, Contraseña si tienen, y su Rol). 
+     * @param conn Conexión a la base de datos.
+     * @param BDNombre Nombre de la base de datos.
+     * @return Devolverá un String con la lista de usuarios Clientes y usuarios Empleados.
+     * @throws SQLException Mostrará las excepciones provocadas por la base de datos.
+     */
     public static String listarTodosUsuarios(Connection conn, String BDNombre) throws SQLException {
         Statement stmt = null;
         String listaUsuarios = "\nListando todos los usuarios...\n";
@@ -201,7 +250,17 @@ class Listar {
     }
 
     
-    //Listar Patinetes Alquilados
+    /**
+     * El método listarPatinetesAlquilados nos mostrará una lista 
+     * con los patinetes alquilados, este mostrará todos los datos del patinete  
+     * (Número de Serie, Marca, Modelo, Km Recorridos) 
+     * y el nombre del usuario que lo tiene alquilado.
+     * 
+     * @param conn Conexión a la base de datos.
+     * @param BDNombre Nombre de la base de datos.
+     * @return Devolverá un String con la lista de usuarios de patinetes alquilados.
+     * @throws SQLException Mostrará las excepciones provocadas por la base de datos.
+     */
     public static String listarPatinetesAlquilados(Connection conn, String BDNombre) throws SQLException {
     	Statement stmt = null;
     	Statement stmt2 = null;
@@ -251,7 +310,16 @@ class Listar {
         return listaAlq;
     }   
     
-    //Listar Patinetes No Alquilados
+    /**
+     * El método listarPatinetesNoAlquilados nos mostrará una lista 
+     * con los patinetes que no están alquilados, este mostrará todos 
+     * los datos del patinete (Número de Serie, Marca, Modelo, Km Recorridos).
+     * 
+     * @param conn Conexión a la base de datos.
+     * @param BDNombre Nombre de la base de datos.
+     * @return Devolverá un String con la lista de usuarios de patinetes que no están alquilados.
+     * @throws SQLException Mostrará las excepciones provocadas por la base de datos.
+     */
     public static String listarPatinetesNoAlquilados(Connection conn, String BDNombre) throws SQLException {
     	Statement stmt = null;
     	String listaNoAlq = "\nListando patinetes NO alquilados...\n";
@@ -286,7 +354,14 @@ class Listar {
     }   
     
     
-    //Guardar Listados
+    /**
+     * El método guardarListado nos permitirá guardar cualquier listado que hemos creado. 
+     * Este método guardará la lista en la carpeta 'C:/informes', si no existe esa 
+     * carpeta la creará automáticamente.
+     * 
+     * @param lista Deberemos pasarle el String con la lista que queremos guardar
+     * @param nomArchivo Deberemos pasarle el nombre de como queremos guardar el archivo
+     */
     public static void guardarListado(String lista, String nomArchivo) {
 		File fs = null;
 		File fd = null;

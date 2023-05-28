@@ -1,8 +1,28 @@
 import java.sql.*;
 import java.util.Scanner;
 
+/**
+ * Clase Menú Principal, tras hacer correctamente el login en el programa.
+ * 
+ * @author Javier Navarro <p>
+ * Andreu Julià <p>
+ * Valentín Silva <p>
+ * Pedro Caaveiro <p>
+ * Juan Castresana
+ *
+ */
 public class MenuPrincipal {
 
+	/**
+	 * Tendrá el Menú Principal del programa, se presentará 
+	 * este menú con las diferentes opciones disponibles. <p>
+	 * - Gestionar Usuarios <p>
+	 * - Gestionar Patinetes <p>
+	 * - Listar <p>
+	 * - Buscar por DNI <p>
+	 * 
+	 * @throws SQLException Mostrará las excepciones provocadas por la base de datos.
+	 */
 	public static void menu() throws SQLException {	
 		try {
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/electricskate", "root", "");
