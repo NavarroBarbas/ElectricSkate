@@ -29,11 +29,9 @@ public class ListarTest {
 	public void testListarEmpleados() throws SQLException {
 		//Se guarda lista de empleados.
 	    String empleados = Listar.listarEmpleados(con, "electricskate");
-	    //Se verifica que no sea igual a la lista de empleados obtenida. 
-	   // Assert.assertNotEquals("\nListando usuarios empleados...\n", empleados);
-	    //Se imprime en pantalla 
-	    System.out.println(empleados);
 	    
+	    //Creamos un String con lo que debería salir por pantalla 
+	    //de usuarios que existen
 	    String listaEsperada = "\nListando usuarios empleados...\n"
 	    		+ "\n*************************\n"
 	    		+ "Email: antofer@gmail.com\n"
@@ -64,7 +62,11 @@ public class ListarTest {
 	    		+ "DNI: 11221122R\n"
 	    		+ "Contraseña: fresno\n";
 	    
+	    
+	    //Se verifica que sea igual a la lista de empleados obtenida. 
+	    //E imprimimos por pantalla la lista de empleados.
 	    Assert.assertEquals(listaEsperada, empleados);
+	    System.out.println(empleados);
 	}
 
 
