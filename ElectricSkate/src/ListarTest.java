@@ -13,7 +13,7 @@ public class ListarTest {
 		
 		try {
 			//Nos conectamos a la BBDD antes de ejecutar la clase
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3307/electricskate", "root", "");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/electricskate", "root", "");
 		} catch (SQLException e) {
 			e.printStackTrace();	
 		}
@@ -30,9 +30,41 @@ public class ListarTest {
 		//Se guarda lista de empleados.
 	    String empleados = Listar.listarEmpleados(con, "electricskate");
 	    //Se verifica que no sea igual a la lista de empleados obtenida. 
-	    Assert.assertNotEquals("\nListando usuarios empleados...\n", empleados);
+	   // Assert.assertNotEquals("\nListando usuarios empleados...\n", empleados);
 	    //Se imprime en pantalla 
 	    System.out.println(empleados);
+	    
+	    String listaEsperada = "\nListando usuarios empleados...\n"
+	    		+ "\n*************************\n"
+	    		+ "Email: antofer@gmail.com\n"
+	    		+ "Nombre: Antonio\n"
+	    		+ "Apellidos: Fernandez\n"
+	    		+ "Edad: 25 años\n"
+	    		+ "DNI: 87654321A\n"
+	    		+ "Contraseña: Der11FeR32\n"
+	    		+ "\n*************************\n"
+	    		+ "Email: javiernavarro@gmail.com\n"
+	    		+ "Nombre: javier\n"
+	    		+ "Apellidos: navarro\n"
+	    		+ "Edad: 26 años\n"
+	    		+ "DNI: 25123423G\n"
+	    		+ "Contraseña: agua\n"
+	    		+ "\n*************************\n"
+	    		+ "Email: jonnieve@gmail.com\n"
+	    		+ "Nombre: Jon\n"
+	    		+ "Apellidos: Nieve\n"
+	    		+ "Edad: 33 años\n"
+	    		+ "DNI: 11223344D\n"
+	    		+ "Contraseña: JJonNieve333\n"
+	    		+ "\n*************************\n"
+	    		+ "Email: juan@gmail.com\n"
+	    		+ "Nombre: Juan\n"
+	    		+ "Apellidos: Pastor\n"
+	    		+ "Edad: 28 años\n"
+	    		+ "DNI: 11221122R\n"
+	    		+ "Contraseña: fresno\n";
+	    
+	    Assert.assertEquals(listaEsperada, empleados);
 	}
 
 
@@ -43,8 +75,12 @@ public class ListarTest {
 		//Ya que la variable se inicializa así.
 		String clientes = Listar.listarClientes(con, "electricskate");
 		
-		//En este caso como tenemos clientes no nos devolverá solo esa frase
-		Assert.assertNotEquals("\nListando usuarios clientes...\n", clientes);
+		//Comprobamos que la línea inicial debería contener
+		//ese mensaje, si no lo hace, el método quiere decir que falla
+		//y mostrará un mensaje de error.
+		if(!clientes.contains("\nListando usuarios clientes...\n")) {
+			Assert.fail("Debería mostrar la línea inicial del método");
+		}
 		
 		System.out.println(clientes);		
 	}

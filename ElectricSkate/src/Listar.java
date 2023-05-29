@@ -48,7 +48,7 @@ public class Listar {
                 case 1:
                     System.out.println(listarEmpleados(conn, "electricskate"));
                     
-                    System.out.print("Dese guardar la lista? (S/N): ");
+                    System.out.print("Desea guardar la lista? (S/N): ");
                     String guardar = scanner.nextLine();
                     
                     if(guardar.equalsIgnoreCase("s") || guardar.equalsIgnoreCase("si")) {
