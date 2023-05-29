@@ -30,7 +30,6 @@ public class ListarTest {
 		//Se guarda lista de empleados.
 	    String empleados = Listar.listarEmpleados(con, "electricskate");
 	    
-	    
 	    //Creamos un String con lo que debería salir por pantalla 
 	    //de usuarios que existen
 	    String listaEsperada = "\nListando usuarios empleados...\n"
