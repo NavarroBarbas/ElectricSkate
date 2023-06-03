@@ -123,9 +123,15 @@ public abstract class Usuarios {
 				System.out.println("3. Atrás\n");
 
 				System.out.print("Elige una opción: ");
-				int opcion = teclado.nextInt();
-				// SALTO DE LINEA PARA EVITAR ERROR
-				teclado.nextLine();
+				int opcion = 0;
+				while (!teclado.hasNextInt()) {
+			            System.out.println("\nError: ¡Ingrese solo números enteros!\n");
+			            System.out.print("Ingrese una opción: ");
+			            teclado.next();
+			        }
+			        
+			    opcion = teclado.nextInt();
+			    teclado.nextLine();
 
 				// HAGO UN MENU CON SWITCH
 				switch (opcion) {
@@ -185,8 +191,15 @@ public abstract class Usuarios {
 			}
 			
 			System.out.print("Edad: ");
-			int edad = teclado.nextInt();
-			teclado.nextLine();
+			int edad = 0;
+			while (!teclado.hasNextInt()) {
+		            System.out.println("\nError: ¡Ingrese solo números enteros!\n");
+		            System.out.print("Ingrese una opción: ");
+		            teclado.next();
+		        }
+		        
+		    edad = teclado.nextInt();
+		    teclado.nextLine();
 			
 			System.out.print("DNI(8 numeros seguidos de una letra): ");
 			String dni = teclado.nextLine();
@@ -274,10 +287,15 @@ public abstract class Usuarios {
 			}
 			
 			System.out.print("Edad: ");
-			String edad = teclado.nextLine();
-			if (edad.equalsIgnoreCase("exit")) {
-			    return; // SALIR DEL METODO Y VOLVER AL PUNTO DESDE DONDE SE LLAMO 
-			}
+			int edad = 0;
+			while (!teclado.hasNextInt()) {
+		            System.out.println("\nError: ¡Ingrese solo números enteros!\n");
+		            System.out.print("Ingrese una opción: ");
+		            teclado.next();
+		        }
+		        
+		    edad = teclado.nextInt();
+		    teclado.nextLine();
 			
 			System.out.print("DNI (8 numeros seguidos de una letra Mayúscula: ");
 			String dni = teclado.nextLine();
@@ -315,7 +333,6 @@ public abstract class Usuarios {
 		        }
 		    }
 
-			//TODO HAGO UN WHILE PARA VERIFICAR LA CONTRASEÑ‘A
 			while (contrasenya.length() < 8 || mayuscula < 3 || minuscula < 3 || numero < 2) {
 			    // REINICIO LAS VARIABLES DE CONTADOR
 			    mayuscula = 0;

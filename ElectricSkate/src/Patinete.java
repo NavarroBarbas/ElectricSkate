@@ -41,8 +41,15 @@ public class Patinete {
 			
 			System.out.print("Elige una opción: ");
 			
+			opcionMenuPatinete = 0;
+			while (!teclado.hasNextInt()) {
+		            System.out.println("\nError: ¡Ingrese solo números enteros!\n");
+		            System.out.print("Ingrese una opción: ");
+		            teclado.next();
+		        }
+		        
 			opcionMenuPatinete = teclado.nextInt();
-			teclado.nextLine();
+		    teclado.nextLine();
 				
 			switch (opcionMenuPatinete) {
 			case 1:
@@ -95,17 +102,22 @@ public class Patinete {
 				break;
 			case 3:				
 				String emailDev;
-				int kmPatinete;
-				System.out.println("\nEscriba 'exit' en cualquier momento para salir al menú.\n");
-				
+				double kmPatinete;
+
 				System.out.print("Introduzca el email del cliente: ");
 				emailDev = teclado.nextLine();
 				if(emailDev.toLowerCase().equals("exit")) { break; }
 				
 				System.out.print("Introduzca los kilómetros del patinete: ");
-				kmPatinete = teclado.nextInt();
+				while (!teclado.hasNextDouble()) {
+					System.out.println("Error: ¡Ingrese solo números!");
+					System.out.print("Ingrese un número: ");
+					teclado.next();
+			    }
+			        
+			    kmPatinete = teclado.nextDouble();
 				
-				devolucionPatinete(con, BDNombre, emailDev, kmPatinete);
+			    devolucionPatinete(con, BDNombre, emailDev, kmPatinete);
 				
 				break;
 			case 4:
@@ -273,7 +285,7 @@ public class Patinete {
 	 * @param kmPatinete Km que ha recorrido el patinete con el usuario.
 	 * @throws SQLException Mostrará las excepciones provocadas por la base de datos.
 	 */
-	public static void devolucionPatinete(Connection con, String BDNombre, String emailDev, int kmPatinete) throws SQLException {
+	public static void devolucionPatinete(Connection con, String BDNombre, String emailDev, double kmPatinete) throws SQLException {
 		Scanner teclado = new Scanner(System.in); 
 		int existeAlquiler = 0;
 		int existeEmail = 0;

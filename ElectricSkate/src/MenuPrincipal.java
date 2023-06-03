@@ -40,8 +40,15 @@ public class MenuPrincipal {
 				System.out.println("5. Salir\n");
 				
 				System.out.print("Elige una opción: ");
-				int opcion = teclado.nextInt();
-				teclado.nextLine();
+				int opcion = 0;
+				while (!teclado.hasNextInt()) {
+			            System.out.println("\nError: ¡Ingrese solo números enteros!\n");
+			            System.out.print("Ingrese una opción: ");
+			            teclado.next();
+			        }
+			        
+			    opcion = teclado.nextInt();
+			    teclado.nextLine();
 				
 				switch (opcion) {
 				case 1:

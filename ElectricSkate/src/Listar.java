@@ -41,8 +41,15 @@ public class Listar {
             System.out.println("6. Atrás\n");
 
             System.out.print("Elige una opción: ");
-            opcion = scanner.nextInt();
-            scanner.nextLine();
+            opcion = 0;
+			while (!scanner.hasNextInt()) {
+		            System.out.println("\nError: ¡Ingrese solo números enteros!\n");
+		            System.out.print("Ingrese una opción: ");
+		            scanner.next();
+		        }
+		        
+		    opcion = scanner.nextInt();
+		    scanner.nextLine();
             
             switch(opcion) {
                 case 1:
